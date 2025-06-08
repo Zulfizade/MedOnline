@@ -1,6 +1,4 @@
 import MessageModel from '../models/Message.js';
-import DoctorModel from '../models/doctorModel.js';
-import PatientModel from '../models/patientModel.js';
 
 // Yeni mesaj gönderme
 export const sendMessage = async (req, res) => {

@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
-import Doctor from '../models/Doctor.js';
-import Patient from '../models/Patient.js';
+import Doctor from '../models/doctorModel.js';
+import Patient from '../models/patientModel.js';
 
 export const protect = async (req, res, next) => {
   try {

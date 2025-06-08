@@ -4,15 +4,14 @@ import {
   registerPatient,
   login,
   logout,
-} from '../controllers/authController.js';
+} from '../controller/authController.js';
+import { uploadCertificate } from '../middleware/uploadCertificate.js';
 
 const router = express.Router();
 
-//  Kayıt Rotaları
-router.post('/register/doctor', registerDoctor);
+// Multer middleware'i sadece doktor kayıtta çalışır
+router.post('/register/doctor', uploadCertificate.single('certificate'), registerDoctor);
 router.post('/register/patient', registerPatient);
-
-//  Giriş ve Çıkış
 router.post('/login', login);
 router.post('/logout', logout);
 

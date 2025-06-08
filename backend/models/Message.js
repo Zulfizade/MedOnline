@@ -14,4 +14,6 @@ const messageSchema =  mongoose.Schema({
   receiverDeleted: { type: Boolean, default: false },
 }, { timestamps: true });
 
-export const MessageModel = mongoose.model('Message', messageSchema);
+const MessageModel = mongoose.model('Message', messageSchema);
+
+export default  MessageModel;
