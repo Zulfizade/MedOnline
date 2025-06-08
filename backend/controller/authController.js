@@ -71,6 +71,7 @@ export const registerDoctor = async (req, res) => {
 
 // Patient Kayıt
 export const registerPatient = async (req, res) => {
+  console.log('Gelen req.body:', req.body);  // Bunu ekle
   try {
     const { name, email, password, confirmPassword } = req.body;
 
