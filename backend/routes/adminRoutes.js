@@ -1,33 +1,16 @@
-// routes/adminRoutes.js
-import express from 'express';
-import Doctor from '../models/doctorModel.js';
-import { adminAuth } from '../middleware/adminAuth.js';
+import express from "express";
+import {
+  approveDoctor,
+  getPendingDoctors,
+  getAllPatients,
+} from "../controller/adminController.js";
+import { protect, requireAdmin } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-// Doktoru onayla
-router.patch('/approve-doctor/:id', adminAuth, async (req, res) => {
-  try {
-    const doctor = await Doctor.findById(req.params.id);
-    if (!doctor) return res.status(404).json({ message: 'Doktor bulunamadı' });
-
-    doctor.isApproved = true;
-    await doctor.save();
-
-    res.json({ message: 'Doktor onaylandı' });
-  } catch (error) {
-    res.status(500).json({ message: 'Sunucu hatası' });
-  }
-});
-
-// Onay bekleyen doktorları listele
-router.get('/pending-doctors', adminAuth, async (req, res) => {
-  try {
-    const doctors = await Doctor.find({ isApproved: false });
-    res.json(doctors);
-  } catch (error) {
-    res.status(500).json({ message: 'Sunucu hatası' });
-  }
-});
+// Admin yetkili işlemler
+router.patch("/approve-doctor/:id", protect, requireAdmin, approveDoctor);
+router.get("/pending-doctors", protect, requireAdmin, getPendingDoctors);
+router.get("/patients", protect, requireAdmin, getAllPatients);
 
 export default router;
