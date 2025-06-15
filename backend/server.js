@@ -11,6 +11,7 @@ import chatRoutes from './routes/chatRoutes.js';
 import { socketHandler } from './socket/socketHandler.js';
 
 import adminRoutes from './routes/adminRoutes.js';
+import testRoutes from './routes/testRoutes.js';
 
 // Ortam değişkenlerini yükle
 dotenv.config();
@@ -39,6 +40,7 @@ app.use('/uploads', express.static('uploads'));
 app.use('/api/auth', authRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/test', testRoutes);
 
 // Socket bağlantısı
 socketHandler(io);

@@ -1,17 +1,37 @@
-import MessageModel from "../models/Message.js";
+// controllers/messageController.js
 
-// Yeni mesaj gönderme
+import mongoose from "mongoose";
+import MessageModel from "../models/Message.js";
+import PatientModel from "../models/patientModel.js";
+import DoctorModel from "../models/doctorModel.js";
+import { sendOfflineEmailNotification } from "../utils/emailSender.js";
+
+// MongoDB ObjectId kontrolü
+const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id);
+
+// Mesaj gönderme
 export const sendMessage = async (req, res) => {
   try {
-    const { receiverId, receiverModel, message } = req.body;
-    console.log("Gelen veri:", req.body);
+    const { receiverId, message } = req.body;
     const senderId = req.user.id;
     const senderModel = req.user.role === "doctor" ? "Doctor" : "Patient";
 
-    if (!receiverId || !message || !receiverModel) {
-      return res
-        .status(400)
-        .json({ message: "Alıcı, alıcı modeli ve mesaj zorunludur" });
+    if (!receiverId || !message) {
+      return res.status(400).json({ message: "Alıcı ve mesaj zorunludur" });
+    }
+
+    if (!isValidObjectId(receiverId)) {
+      return res.status(400).json({ message: "Geçersiz alıcı ID'si" });
+    }
+
+    // Alıcının modelini belirle
+    let receiverModel;
+    if (await PatientModel.exists({ _id: receiverId })) {
+      receiverModel = "Patient";
+    } else if (await DoctorModel.exists({ _id: receiverId })) {
+      receiverModel = "Doctor";
+    } else {
+      return res.status(404).json({ message: "Alıcı bulunamadı" });
     }
 
     const newMessage = new MessageModel({
@@ -24,21 +44,40 @@ export const sendMessage = async (req, res) => {
 
     await newMessage.save();
 
-    // Burada socket.io ile gerçek zamanlı mesaj bildirimi yapabilirsin
+    // Mail bildirimi gönder
+    try {
+      await sendOfflineEmailNotification(receiverId, message);
+      console.log("📧 Mail bildirimi gönderildi.");
+    } catch (emailError) {
+      console.error("❌ Mail gönderme hatası:", emailError);
+    }
 
-    res.status(201).json({ message: "Mesaj gönderildi", newMessage });
+    return res.status(201).json({ message: "Mesaj gönderildi", newMessage });
   } catch (error) {
     console.error("Mesaj gönderme hatası:", error);
-    res.status(500).json({ message: "Sunucu hatası" });
+    return res.status(500).json({ message: "Sunucu hatası" });
   }
 };
 
-// Mesajları çek (iki kullanıcı arasındaki, silinmemiş mesajlar)
+// Mesajları çek (iki kullanıcı arasında)
 export const getMessages = async (req, res) => {
   try {
     const userId = req.user.id;
     const userModel = req.user.role === "doctor" ? "Doctor" : "Patient";
-    const { otherUserId, otherUserModel } = req.params;
+    const { otherUserId } = req.params;
+
+    if (!isValidObjectId(otherUserId)) {
+      return res.status(400).json({ message: "Geçersiz kullanıcı ID'si" });
+    }
+
+    let otherUserModel;
+    if (await PatientModel.exists({ _id: otherUserId })) {
+      otherUserModel = "Patient";
+    } else if (await DoctorModel.exists({ _id: otherUserId })) {
+      otherUserModel = "Doctor";
+    } else {
+      return res.status(404).json({ message: "Karşı kullanıcı bulunamadı" });
+    }
 
     const messages = await MessageModel.find({
       $or: [
@@ -59,10 +98,10 @@ export const getMessages = async (req, res) => {
       ],
     }).sort({ createdAt: 1 });
 
-    res.status(200).json(messages);
+    return res.status(200).json(messages);
   } catch (error) {
     console.error("Mesajları çekme hatası:", error);
-    res.status(500).json({ message: "Sunucu hatası" });
+    return res.status(500).json({ message: "Sunucu hatası" });
   }
 };
 
@@ -79,10 +118,10 @@ export const getNotifications = async (req, res) => {
       receiverDeleted: false,
     }).populate("sender", "name email role");
 
-    res.status(200).json(unreadMessages);
+    return res.status(200).json(unreadMessages);
   } catch (error) {
     console.error("Bildirim hatası:", error);
-    res.status(500).json({ message: "Sunucu hatası" });
+    return res.status(500).json({ message: "Sunucu hatası" });
   }
 };
 
@@ -92,28 +131,9 @@ export const markAsRead = async (req, res) => {
     const { messageId } = req.params;
     const userId = req.user.id;
 
-    const message = await MessageModel.findById(messageId);
-
-    if (!message || message.receiver.toString() !== userId) {
-      return res.status(403).json({ message: "Yetkisiz işlem" });
+    if (!isValidObjectId(messageId)) {
+      return res.status(400).json({ message: "Geçersiz mesaj ID'si" });
     }
-
-    message.isRead = true;
-    await message.save();
-
-    res.status(200).json({ message: "Mesaj okundu olarak işaretlendi" });
-  } catch (error) {
-    console.error("Okuma hatası:", error);
-    res.status(500).json({ message: "Sunucu hatası" });
-  }
-};
-
-// Mesajı sadece kendi tarafında sil (senderDeleted ya da receiverDeleted olarak işaretle)
-export const deleteMessageForMe = async (req, res) => {
-  try {
-    const { messageId } = req.params;
-    const userId = req.user.id;
-    const userModel = req.user.role === "doctor" ? "Doctor" : "Patient";
 
     const message = await MessageModel.findById(messageId);
 
@@ -121,7 +141,37 @@ export const deleteMessageForMe = async (req, res) => {
       return res.status(404).json({ message: "Mesaj bulunamadı" });
     }
 
-    // Silme sadece kendi tarafında olmalı
+    if (message.receiver.toString() !== userId) {
+      return res.status(403).json({ message: "Yetkisiz işlem" });
+    }
+
+    message.isRead = true;
+    await message.save();
+
+    return res.status(200).json({ message: "Mesaj okundu olarak işaretlendi" });
+  } catch (error) {
+    console.error("Okuma hatası:", error);
+    return res.status(500).json({ message: "Sunucu hatası" });
+  }
+};
+
+// Mesajı sadece kendi tarafında sil
+export const deleteMessageForMe = async (req, res) => {
+  try {
+    const { messageId } = req.params;
+    const userId = req.user.id;
+    const userModel = req.user.role === "doctor" ? "Doctor" : "Patient";
+
+    if (!isValidObjectId(messageId)) {
+      return res.status(400).json({ message: "Geçersiz mesaj ID'si" });
+    }
+
+    const message = await MessageModel.findById(messageId);
+
+    if (!message) {
+      return res.status(404).json({ message: "Mesaj bulunamadı" });
+    }
+
     if (
       message.sender.toString() === userId &&
       message.senderModel === userModel
@@ -138,9 +188,9 @@ export const deleteMessageForMe = async (req, res) => {
 
     await message.save();
 
-    res.status(200).json({ message: "Mesaj kendi tarafınızdan silindi" });
+    return res.status(200).json({ message: "Mesaj kendi tarafınızdan silindi" });
   } catch (error) {
     console.error("Mesaj silme hatası:", error);
-    res.status(500).json({ message: "Sunucu hatası" });
+    return res.status(500).json({ message: "Sunucu hatası" });
   }
 };

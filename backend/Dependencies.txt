@@ -7,3 +7,4 @@ jsonwebtoken
 socket.io
 nodemon
 multer
+nodemailer
