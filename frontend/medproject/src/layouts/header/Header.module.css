@@ -1,0 +1,58 @@
+.header{
+    width: 80%;
+    margin: 2rem 0;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .logo{
+        width: 15%;
+    }
+
+    ul{
+        display: flex;
+        list-style: none;
+        justify-content: space-between;
+        align-items: center;
+        width: 40%;
+
+        li{
+            color: #333;
+            cursor: pointer;
+            transition: color 0.3s ease;
+
+            a{
+                font-size: 1.2rem;
+                text-decoration: none;
+                color: inherit;
+            }
+
+            &:hover{
+                color: #2bff00;
+            }
+        }
+    }
+
+    .icons{
+        width: 10%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+
+        i{
+            color: #333;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+
+            &:hover{
+                color: #2bff00;
+            }
+        }
+    }
+
+    .bars{
+        display: none;
+    }
+}

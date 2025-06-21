@@ -227,3 +227,12 @@ export const logout = (req, res) => {
   });
   res.json({ message: "Oturum sonlandırıldı" });
 };
+
+export const getMe = async (req, res) => {
+  try {
+    // req.user protect middleware-dən gəlir
+    res.json(req.user);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+};

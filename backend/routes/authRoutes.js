@@ -5,6 +5,7 @@ import {
   registerAdmin,
   login,
   logout,
+  getMe,
 } from '../controller/authController.js';
 import {
   approveDoctor,
@@ -22,6 +23,7 @@ router.post('/register/patient', registerPatient);
 router.post('/register/admin', registerAdmin); // Admin kaydı
 router.post('/login', login);
 router.post('/logout', logout);
+router.get('/me', protect, getMe);
 
 
 export default router;
