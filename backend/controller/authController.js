@@ -65,7 +65,7 @@ export const registerAdmin = async (req, res) => {
 // ✅ Doctor Kayıt
 export const registerDoctor = async (req, res) => {
   try {
-    const { name, email, password, confirmPassword, university } = req.body;
+    const { name, email, password, confirmPassword, university, specialty } = req.body;
 
     if (password !== confirmPassword) {
       return res.status(400).json({ message: "Şifreler uyuşmuyor" });
@@ -79,37 +79,37 @@ export const registerDoctor = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 12);
     const certificate = req.file?.path;
 
+    if (!certificate) {
+      return res.status(400).json({ message: "Sertifikat yüklənməlidir!" });
+    }
+
     const doctor = new DoctorModel({
       name,
       email,
       password: hashedPassword,
       university,
       certificate,
+      specialty, // <-- ƏLAVƏ ET!
       isVerified: false,
       role: "doctor",
     });
 
     await doctor.save();
 
-    const token = createToken(doctor);
+    // Qeydiyyatdan sonra cookie YAZMA!
+    // const token = createToken(doctor);
+    // res.cookie(...)
 
-    res
-      .cookie("token", token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-      })
-      .status(201)
-      .json({
-        message: "Doktor kaydedildi, admin onayı bekleniyor",
-        doctor: {
-          id: doctor._id,
-          name: doctor.name,
-          email: doctor.email,
-          isVerified: doctor.isVerified,
-        },
-      });
+    res.status(201).json({
+      message: "Doktor kaydedildi, admin onayı bekleniyor",
+      doctor: {
+        id: doctor._id,
+        name: doctor.name,
+        email: doctor.email,
+        specialty: doctor.specialty,
+        isVerified: doctor.isVerified,
+      },
+    });
   } catch (error) {
     console.error("Doktor kayıt hatası:", error);
     res.status(500).json({ message: "Sunucu hatası" });
@@ -141,24 +141,18 @@ export const registerPatient = async (req, res) => {
 
     await patient.save();
 
-    const token = createToken(patient);
+    // Qeydiyyatdan sonra cookie YAZMA!
+    // const token = createToken(patient);
+    // res.cookie(...)
 
-    res
-      .cookie("token", token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-      })
-      .status(201)
-      .json({
-        message: "Hasta kaydedildi",
-        patient: {
-          id: patient._id,
-          name: patient.name,
-          email: patient.email,
-        },
-      });
+    res.status(201).json({
+      message: "Hasta kaydedildi",
+      patient: {
+        id: patient._id,
+        name: patient.name,
+        email: patient.email,
+      },
+    });
   } catch (error) {
     console.error("Hasta kayıt hatası:", error);
     res.status(500).json({ message: "Sunucu hatası" });
@@ -173,14 +167,18 @@ export const login = async (req, res) => {
     let user = await DoctorModel.findOne({ email });
     let role = "doctor";
 
-    if (!user) {
+    if (user) {
+      // Pending doctor üçün girişə icazə vermə!
+      if (!user.isVerified) {
+        return res.status(403).json({ message: "Hesabınız admin tərəfindən təsdiqlənməyib. Qısa müddətdə baxılacaq." });
+      }
+    } else {
       user = await PatientModel.findOne({ email });
       role = "patient";
-    }
-
-    if (!user) {
-      user = await AdminModel.findOne({ email });
-      role = "admin";
+      if (!user) {
+        user = await AdminModel.findOne({ email });
+        role = "admin";
+      }
     }
 
     if (!user) {

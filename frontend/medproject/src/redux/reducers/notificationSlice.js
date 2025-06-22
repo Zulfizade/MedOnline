@@ -1,11 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import axios from '../axiosInstance';
 
 export const fetchNotifications = createAsyncThunk(
   'notifications/fetchNotifications',
-  async () => {
-    const res = await axios.get('/api/chat/notifications/all', { withCredentials: true });
-    return res.data;
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await axios.get('/api/chat/notifications/all');
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || "Notification fetch error");
+    }
   }
 );
 
@@ -22,11 +26,11 @@ const notificationSlice = createSlice({
       .addCase(fetchNotifications.pending, (state) => { state.status = 'loading'; })
       .addCase(fetchNotifications.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.items = action.payload;
+        state.items = action.payload || [];
       })
       .addCase(fetchNotifications.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.error.message;
+        state.error = action.payload || action.error.message;
       });
   },
 });

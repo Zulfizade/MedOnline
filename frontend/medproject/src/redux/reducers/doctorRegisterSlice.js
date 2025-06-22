@@ -1,11 +1,17 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import axios from '../axiosInstance';
 
 export const doctorRegister = createAsyncThunk(
   'doctorRegister/register',
-  async (formData) => {
-    const res = await axios.post('/api/auth/register/doctor', formData, { withCredentials: true });
-    return res.data;
+  async (formData, { rejectWithValue }) => {
+    try {
+      const res = await axios.post('/api/auth/register/doctor', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || "Register error");
+    }
   }
 );
 
@@ -23,7 +29,7 @@ const doctorRegisterSlice = createSlice({
       })
       .addCase(doctorRegister.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.error.message;
+        state.error = action.payload || action.error.message;
         state.success = false;
       });
   },

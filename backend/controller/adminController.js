@@ -1,40 +1,73 @@
 import DoctorModel from "../models/doctorModel.js";
 import PatientModel from "../models/patientModel.js";
 
-// Doktoru onayla
-export const approveDoctor = async (req, res) => {
-  try {
-    const doctor = await DoctorModel.findById(req.params.id);
-    if (!doctor) return res.status(404).json({ message: "Doktor bulunamadı" });
-
-    doctor.isVerified = true;
-    await doctor.save();
-
-    res.json({ message: "Doktor onaylandı" });
-  } catch (error) {
-    console.error("Doktor onaylama hatası:", error);
-    res.status(500).json({ message: "Sunucu hatası" });
-  }
-};
-
-// Onay bekleyen doktorları getir
+// Pending doctorları gətir
 export const getPendingDoctors = async (req, res) => {
   try {
-    const doctors = await DoctorModel.find({ isVerified: false });
+    // Yalnız pending, rejected olmayan doctorlar
+    const doctors = await DoctorModel.find({});
     res.json(doctors);
   } catch (error) {
-    console.error("Onay bekleyen doktorları getirirken hata:", error);
-    res.status(500).json({ message: "Sunucu hatası" });
+    res.status(500).json({ message: "Server xətası" });
   }
 };
 
-// Tüm hastaları getir
+// Bütün patientləri gətir
 export const getAllPatients = async (req, res) => {
   try {
     const patients = await PatientModel.find({});
     res.json(patients);
   } catch (error) {
-    console.error("Hastaları getirirken hata:", error);
-    res.status(500).json({ message: "Sunucu hatası" });
+    res.status(500).json({ message: "Server xətası" });
+  }
+};
+
+// Doktoru təsdiqlə
+export const approveDoctor = async (req, res) => {
+  try {
+    const doctor = await DoctorModel.findById(req.params.id);
+    if (!doctor) return res.status(404).json({ message: "Doktor tapılmadı" });
+    doctor.isVerified = true;
+    doctor.rejected = false;
+    await doctor.save();
+    res.json({ message: "Doktor təsdiqləndi" });
+  } catch (error) {
+    res.status(500).json({ message: "Server xətası" });
+  }
+};
+
+// Doktoru ləğv et (təsdiqləmədən imtina)
+export const rejectDoctor = async (req, res) => {
+  try {
+    const doctor = await DoctorModel.findById(req.params.id);
+    if (!doctor) return res.status(404).json({ message: "Doktor tapılmadı" });
+    doctor.isVerified = false;
+    doctor.rejected = true;
+    await doctor.save();
+    res.json({ message: "Doktor təsdiqlənmədi (ləğv olundu)" });
+  } catch (error) {
+    res.status(500).json({ message: "Server xətası" });
+  }
+};
+
+// Doktoru sil
+export const deleteDoctor = async (req, res) => {
+  try {
+    const doctor = await DoctorModel.findByIdAndDelete(req.params.id);
+    if (!doctor) return res.status(404).json({ message: "Doktor tapılmadı" });
+    res.json({ message: "Doktor silindi" });
+  } catch (error) {
+    res.status(500).json({ message: "Server xətası" });
+  }
+};
+
+// Patient sil
+export const deletePatient = async (req, res) => {
+  try {
+    const patient = await PatientModel.findByIdAndDelete(req.params.id);
+    if (!patient) return res.status(404).json({ message: "Patient tapılmadı" });
+    res.json({ message: "Patient silindi" });
+  } catch (error) {
+    res.status(500).json({ message: "Server xətası" });
   }
 };

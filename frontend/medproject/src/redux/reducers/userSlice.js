@@ -1,11 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import axios from '../axiosInstance';
 
 export const fetchUser = createAsyncThunk(
   'user/fetchUser',
-  async () => {
-    const res = await axios.get('/api/auth/me', { withCredentials: true });
-    return res.data;
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await axios.get('/api/auth/me');
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || "User fetch error");
+    }
   }
 );
 
@@ -24,11 +28,13 @@ const userSlice = createSlice({
       .addCase(fetchUser.pending, (state) => { state.status = 'loading'; })
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.info = action.payload;
+        state.info = action.payload || null;
+        state.error = null;
       })
       .addCase(fetchUser.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.error.message;
+        state.error = action.payload || action.error.message;
+        state.info = null;
       });
   },
 });

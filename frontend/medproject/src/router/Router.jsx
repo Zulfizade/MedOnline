@@ -7,8 +7,10 @@ import Category from "../pages/category/Category";
 import { createBrowserRouter } from "react-router";
 import ErrorPage from "../pages/errorPage/ErrorPage";
 import Login from "../pages/login/Login";
-import PatienRegister from "../pages/register/PatienRegister";
+import PatientRegister from "../pages/register/PatientRegister";
 import DoctorRegister from "../pages/register/DoctorRegister";
+import Admin from "../pages/admin/Admin";
+import AdminLogin from "../pages/admin/AdminLogin";
 
 
 
@@ -34,7 +36,7 @@ export const router = createBrowserRouter([
                 element: <Tips />
             },
             {
-                path: '/categories',
+                path: '/category',
                 element: <Category />
             },
         ]
@@ -49,10 +51,18 @@ export const router = createBrowserRouter([
     },
     {
         path: '/PatientRegister',
-        element: <PatienRegister/>
+        element: <PatientRegister/>
     },
     {
         path: '/DoctorRegister',
         element: <DoctorRegister/>
     },
+    {
+        path: '/dashboard',
+        element: <Admin />
+    },
+    {
+        path: '/admin-login',
+        element: <AdminLogin/>
+    }
 ])
