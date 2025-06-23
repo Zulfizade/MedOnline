@@ -3,11 +3,17 @@ import { useDispatch } from "react-redux";
 import { patientRegister } from "../../redux/reducers/patientRegisterSlice";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import style from "./Patient.module.css";
 
 const PatientRegister = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [form, setForm] = useState({ name: "", email: "", password: "", confirmPassword: "" });
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
+  });
   const [error, setError] = useState(null);
 
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
@@ -15,16 +21,17 @@ const PatientRegister = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     setError(null);
+    if (form.password !== form.confirmPassword) {
+      setError("Şifrələr uyğun deyil!");
+      return;
+    }
     try {
-      const res = await dispatch(patientRegister(form)).unwrap();
-      if (res && res.patient) {
-        toast.info("Qeydiyyat uğurla başa çatdı. Qısa müddətdə admin təsdiqləyəcək.");
-        navigate("/login");
-      } else {
-        setError("Qeydiyyat zamanı xəta baş verdi!");
-      }
+      await dispatch(patientRegister(form)).unwrap();
+      toast.success("Qeydiyyat uğurlu!");
+      navigate("/login");
     } catch (err) {
       setError(
+        (typeof err === "string" && err) ||
         err?.message ||
         err?.error ||
         "Qeydiyyat zamanı xəta baş verdi!"
@@ -33,17 +40,20 @@ const PatientRegister = () => {
   };
 
   return (
-    <div>
-      <h2>Patient Register</h2>
-      <form onSubmit={handleSubmit} autoComplete="off">
+    <div className={style.registerContainer}>
+      <form className={style.registerForm} onSubmit={handleSubmit} autoComplete="off">
+        <h2 className={style.title}>Pasiyent Qeydiyyatı</h2>
         <input
+          className={style.input}
           name="name"
-          placeholder="Name"
+          type="text"
+          placeholder="Ad"
           value={form.name}
           onChange={handleChange}
           required
         />
         <input
+          className={style.input}
           name="email"
           type="email"
           placeholder="Email"
@@ -52,24 +62,26 @@ const PatientRegister = () => {
           required
         />
         <input
+          className={style.input}
           name="password"
           type="password"
-          placeholder="Password"
+          placeholder="Şifrə"
           value={form.password}
           onChange={handleChange}
           required
         />
         <input
+          className={style.input}
           name="confirmPassword"
           type="password"
-          placeholder="Confirm Password"
+          placeholder="Şifrə təkrar"
           value={form.confirmPassword}
           onChange={handleChange}
           required
         />
-        <button type="submit">Register</button>
+        <button className={style.button} type="submit">Qeydiyyat</button>
+        {error && <div className={style.error}>{error}</div>}
       </form>
-      {error && <div style={{color:"red"}}>{error}</div>}
     </div>
   );
 };

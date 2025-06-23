@@ -3,6 +3,7 @@ import axios from "../../redux/axiosInstance";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import style from "./Admin.module.css";
 
 function Admin() {
   const user = useSelector(state => state.user.info);
@@ -58,99 +59,111 @@ function Admin() {
 
   // Status rəngi
   const getStatus = (doc) => {
-    if (doc.isVerified) return { text: "Təsdiqlənib", color: "#2ecc40" };
+    if (doc.isVerified) return { text: "Təsdiqlənib", color: "#1a8f3c" };
     if (doc.rejected) return { text: "Ləğv olunub", color: "#ff4136" };
     return { text: "Pending", color: "#ffdc00" };
   };
 
   return (
-    <div style={{padding: "2rem"}}>
-      <h2>Admin Panel</h2>
-      <div style={{marginBottom: "1rem"}}>
-        <button onClick={() => setTab("doctors")}>Doktorlar</button>
-        <button onClick={() => setTab("patients")}>Patientlər</button>
+    <div className={style.adminPanelContainer}>
+      <h2 className={style.title}>Admin Panel</h2>
+      <div className={style.tabButtons}>
+        <button
+          className={`${style.tabBtn} ${tab === "doctors" ? style.active : ""}`}
+          onClick={() => setTab("doctors")}
+        >
+          Doktorlar
+        </button>
+        <button
+          className={`${style.tabBtn} ${tab === "patients" ? style.active : ""}`}
+          onClick={() => setTab("patients")}
+        >
+          Patientlər
+        </button>
       </div>
       {tab === "doctors" && (
         doctors.length === 0 ? (
-          <div>Heç bir doktor tapılmadı.</div>
+          <div className={style.emptyMsg}>Heç bir doktor tapılmadı.</div>
         ) : (
-        <table border={1} cellPadding={8} cellSpacing={0}>
-          <thead>
-            <tr>
-              <th>Ad</th>
-              <th>Email</th>
-              <th>Universitet</th>
-              <th>Sahə</th>
-              <th>Sertifikat</th>
-              <th>Status</th>
-              <th>Əməliyyatlar</th>
-            </tr>
-          </thead>
-          <tbody>
-            {doctors.map(doc => {
-              const status = getStatus(doc);
-              return (
-                <tr key={doc._id}>
-                  <td>{doc.name}</td>
-                  <td>{doc.email}</td>
-                  <td>{doc.university}</td>
-                  <td>{doc.specialty}</td>
-                  <td>
-                    <a
-                      href={`http://localhost:9012/${doc.certificate.replace(/\\/g, "/")}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Bax
-                    </a>
-                  </td>
-                  <td>
-                    <span style={{
-                      background: status.color,
-                      color: "#222",
-                      padding: "4px 10px",
-                      borderRadius: "8px",
-                      fontWeight: "bold"
-                    }}>
-                      {status.text}
-                    </span>
-                  </td>
-                  <td>
-                    <button onClick={() => handleApprove(doc._id)}>Təsdiqlə</button>
-                    <button onClick={() => handleReject(doc._id)}>Ləğv et</button>
-                    <button onClick={() => handleDeleteDoctor(doc._id)}>Sil</button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <div className={style.tableWrapper}>
+          <table className={style.table}>
+            <thead>
+              <tr>
+                <th>Ad</th>
+                <th>Email</th>
+                <th>Universitet</th>
+                <th>Sahə</th>
+                <th>Sertifikat</th>
+                <th>Status</th>
+                <th>Əməliyyatlar</th>
+              </tr>
+            </thead>
+            <tbody>
+              {doctors.map(doc => {
+                const status = getStatus(doc);
+                return (
+                  <tr key={doc._id}>
+                    <td>{doc.name}</td>
+                    <td>{doc.email}</td>
+                    <td>{doc.university}</td>
+                    <td>{doc.specialty}</td>
+                    <td>
+                      <a
+                        className={style.certificateLink}
+                        href={`http://localhost:9012/${doc.certificate.replace(/\\/g, "/")}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Bax
+                      </a>
+                    </td>
+                    <td>
+                      <span
+                        className={style.statusBadge}
+                        style={{ background: status.color }}
+                      >
+                        {status.text}
+                      </span>
+                    </td>
+                    <td>
+                      <button className={style.actionBtn} onClick={() => handleApprove(doc._id)}>Təsdiqlə</button>
+                      <button className={style.actionBtn} onClick={() => handleReject(doc._id)}>Ləğv et</button>
+                      <button className={style.deleteBtn} onClick={() => handleDeleteDoctor(doc._id)}>Sil</button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
         )
       )}
       {tab === "patients" && (
         patients.length === 0 ? (
-          <div>Heç bir patient tapılmadı.</div>
+          <div className={style.emptyMsg}>Heç bir patient tapılmadı.</div>
         ) : (
-        <table border={1} cellPadding={8} cellSpacing={0}>
-          <thead>
-            <tr>
-              <th>Ad</th>
-              <th>Email</th>
-              <th>Əməliyyatlar</th>
-            </tr>
-          </thead>
-          <tbody>
-            {patients.map(pat => (
-              <tr key={pat._id}>
-                <td>{pat.name}</td>
-                <td>{pat.email}</td>
-                <td>
-                  <button onClick={() => handleDeletePatient(pat._id)}>Sil</button>
-                </td>
+        <div className={style.tableWrapper}>
+          <table className={style.table}>
+            <thead>
+              <tr>
+                <th>Ad</th>
+                <th>Email</th>
+                <th>Əməliyyatlar</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {patients.map(pat => (
+                <tr key={pat._id}>
+                  <td>{pat.name}</td>
+                  <td>{pat.email}</td>
+                  <td>
+                    <button className={style.deleteBtn} onClick={() => handleDeletePatient(pat._id)}>Sil</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
         )
       )}
     </div>

@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { doctorRegister } from "../../redux/reducers/doctorRegisterSlice";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
+import style from "./Doctor.module.css";
 
 const specialties = [
   "Kardioloq",
@@ -25,47 +26,42 @@ const DoctorRegister = () => {
   const [form, setForm] = useState({
     name: "",
     email: "",
-    password: "",
-    confirmPassword: "",
     university: "",
     specialty: "",
+    password: "",
+    confirmPassword: "",
     certificate: null
   });
   const [error, setError] = useState(null);
 
   const handleChange = e => {
     const { name, value, files } = e.target;
-    if (name === "certificate") {
-      setForm({ ...form, certificate: files[0] });
-    } else {
-      setForm({ ...form, [name]: value });
-    }
+    setForm(prev => ({
+      ...prev,
+      [name]: files ? files[0] : value
+    }));
   };
 
   const handleSubmit = async e => {
     e.preventDefault();
     setError(null);
-
-    if (!form.certificate) {
-      setError("Sertifikat yüklənməlidir!");
+    if (form.password !== form.confirmPassword) {
+      setError("Şifrələr uyğun deyil!");
       return;
     }
-
-    const formData = new FormData();
-    Object.entries(form).forEach(([key, value]) => {
-      if (value) formData.append(key, value);
-    });
-
+    if (!form.certificate) {
+      setError("Sertifikat əlavə edin!");
+      return;
+    }
     try {
-      const res = await dispatch(doctorRegister(formData)).unwrap();
-      if (res && res.doctor) {
-        toast.info("Qeydiyyat uğurla başa çatdı. Qısa müddətdə admin təsdiqləyəcək.");
-        navigate("/login");
-      } else {
-        setError("Qeydiyyat zamanı xəta baş verdi!");
-      }
+      const formData = new FormData();
+      Object.entries(form).forEach(([key, value]) => formData.append(key, value));
+      await dispatch(doctorRegister(formData)).unwrap();
+      toast.success("Qeydiyyat uğurlu!");
+      navigate("/login");
     } catch (err) {
       setError(
+        (typeof err === "string" && err) ||
         err?.message ||
         err?.error ||
         "Qeydiyyat zamanı xəta baş verdi!"
@@ -74,17 +70,25 @@ const DoctorRegister = () => {
   };
 
   return (
-    <div>
-      <h2>Doctor Register</h2>
-      <form onSubmit={handleSubmit} autoComplete="off" encType="multipart/form-data">
+    <div className={style.registerContainer}>
+      <form
+        className={style.registerForm}
+        onSubmit={handleSubmit}
+        autoComplete="off"
+        encType="multipart/form-data"
+      >
+        <h2 className={style.title}>Həkim Qeydiyyatı</h2>
         <input
+          className={style.input}
           name="name"
-          placeholder="Name"
+          type="text"
+          placeholder="Ad"
           value={form.name}
           onChange={handleChange}
           required
         />
         <input
+          className={style.input}
           name="email"
           type="email"
           placeholder="Email"
@@ -93,13 +97,16 @@ const DoctorRegister = () => {
           required
         />
         <input
+          className={style.input}
           name="university"
-          placeholder="University"
+          type="text"
+          placeholder="Universitet"
           value={form.university}
           onChange={handleChange}
           required
         />
         <select
+          className={style.select}
           name="specialty"
           value={form.specialty}
           onChange={handleChange}
@@ -111,6 +118,7 @@ const DoctorRegister = () => {
           ))}
         </select>
         <input
+          className={style.fileInput}
           name="certificate"
           type="file"
           accept=".pdf,.jpg,.jpeg,.png"
@@ -118,24 +126,26 @@ const DoctorRegister = () => {
           required
         />
         <input
+          className={style.input}
           name="password"
           type="password"
-          placeholder="Password"
+          placeholder="Şifrə"
           value={form.password}
           onChange={handleChange}
           required
         />
         <input
+          className={style.input}
           name="confirmPassword"
           type="password"
-          placeholder="Confirm Password"
+          placeholder="Şifrə təkrar"
           value={form.confirmPassword}
           onChange={handleChange}
           required
         />
-        <button type="submit">Register</button>
+        <button className={style.button} type="submit">Qeydiyyat</button>
+        {error && <div className={style.error}>{error}</div>}
       </form>
-      {error && <div style={{color:"red"}}>{error}</div>}
     </div>
   );
 };

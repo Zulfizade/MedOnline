@@ -1,0 +1,63 @@
+.loaderContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 40vh;
+  gap: 1.2rem;
+}
+
+.kardiogram {
+  width: 120px;
+  height: 40px;
+  margin-bottom: 0.5rem;
+  stroke-dasharray: 120;
+  stroke-dashoffset: 0;
+  animation: kardiogram-move 1.2s linear infinite;
+}
+
+@keyframes kardiogram-move {
+  0% { stroke-dashoffset: 120; }
+  100% { stroke-dashoffset: 0; }
+}
+
+.heart {
+  width: 32px;
+  height: 32px;
+  background: #ff4136; /* QIRMIZI */
+  position: relative;
+  transform: rotate(-45deg);
+  animation: heart-beat 0.8s infinite;
+}
+.heart:before,
+.heart:after {
+  content: "";
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  background: #ff4136; /* QIRMIZI */
+  border-radius: 50%;
+}
+.heart:before {
+  top: -16px;
+  left: 0;
+}
+.heart:after {
+  left: 16px;
+  top: 0;
+}
+
+@keyframes heart-beat {
+  0%, 100% { transform: scale(1) rotate(-45deg);}
+  20% { transform: scale(1.15) rotate(-45deg);}
+  40% { transform: scale(0.95) rotate(-45deg);}
+  60% { transform: scale(1.1) rotate(-45deg);}
+  80% { transform: scale(0.98) rotate(-45deg);}
+}
+
+.loadingText {
+  color: #1a8f3c;
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+}

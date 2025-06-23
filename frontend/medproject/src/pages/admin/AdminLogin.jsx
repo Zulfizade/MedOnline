@@ -4,6 +4,7 @@ import { login } from "../../redux/reducers/authSlice";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { fetchUser } from "../../redux/reducers/userSlice";
+import style from "./AdminLogin.module.css";
 
 const AdminLogin = () => {
   const dispatch = useDispatch();
@@ -36,10 +37,11 @@ const AdminLogin = () => {
   };
 
   return (
-    <div>
-      <h2>Admin Panel Girişi</h2>
-      <form onSubmit={handleSubmit} autoComplete="off">
+    <div className={style.adminLoginContainer}>
+      <form className={style.adminLoginForm} onSubmit={handleSubmit} autoComplete="off">
+        <h2 className={style.title}>Admin Panel Girişi</h2>
         <input
+          className={style.input}
           name="email"
           type="email"
           placeholder="Admin Email"
@@ -48,6 +50,7 @@ const AdminLogin = () => {
           required
         />
         <input
+          className={style.input}
           name="password"
           type="password"
           placeholder="Admin Şifrə"
@@ -55,9 +58,9 @@ const AdminLogin = () => {
           onChange={handleChange}
           required
         />
-        <button type="submit">Giriş</button>
+        <button className={style.button} type="submit">Giriş</button>
+        {error && <div className={style.error}>{error}</div>}
       </form>
-      {error && <div style={{color:"red"}}>{error}</div>}
     </div>
   );
 };
