@@ -1,5 +1,164 @@
 .carousel {
-  padding: 2rem 0;
-  background: #f9f9f9;
-  border-bottom: 1px solid #eee;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(44,222,80,0.10);
+  background: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.7s cubic-bezier(.4,0,.2,1);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 2;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,rgba(0,0,0,0.10) 40%,rgba(0,0,0,0.45) 100%);
+  z-index: 1;
+}
+
+.caption {
+  position: absolute;
+  bottom: 20%;
+  left: 0;
+  width: 65%;
+  text-align: center;
+  z-index: 2;
+  animation: captionIn 1.2s cubic-bezier(.4,0,.2,1);
+}
+
+.slide:not(.active) .caption {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+.slide.active .caption {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.7s, transform 0.7s;
+}
+
+.caption span {
+  display: inline-block;
+  font-family: 'Poppins', 'Roboto', Arial, sans-serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 1.5px;
+  text-shadow: 0 4px 24px rgba(0,0,0,0.18), 0 1px 0 #1a8f3c;
+  border-radius: 12px;
+  padding: 0.5rem 2.2rem;
+  animation: fadeInUp 1.2s cubic-bezier(.4,0,.2,1);
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background-color: transparent;
+  color: #1a8f3c;
+  font-size: 2.2rem;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  z-index: 3;
+  transition: background 0.2s, color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.85;
+}
+.arrow:hover {
+  color: #fff;
+}
+.arrow.left { left: 18px; }
+.arrow.right { right: 18px; }
+
+.dots {
+  position: absolute;
+  bottom: 18px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  z-index: 4;
+}
+.dot, .dotActive {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  margin: 0 5px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #1a8f3c;
+  cursor: pointer;
+  transition: background 0.2s, border 0.2s;
+}
+.dotActive {
+  background: #1a8f3c;
+  border: 2px solid #fff;
+}
+
+@media (max-width: 900px) {
+  .carousel {
+    max-width: 98vw;
+    height: 220px;
+  }
+  .caption span {
+    font-size: 1.3rem;
+    padding: 0.4rem 1.2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .carousel {
+    height: 60vh;
+    width: 100%;
+  }
+  .caption {
+    bottom: 18px;
+  }
+  .caption span {
+    font-size: 1rem;
+    padding: 0.2rem 0.7rem;
+    border-radius: 7px;
+  }
+  .arrow {
+    width: 32px;
+    height: 32px;
+    font-size: 1.2rem;
+  }
+  .dot, .dotActive {
+    width: 8px;
+    height: 8px;
+    margin: 0 2px;
+  }
 }

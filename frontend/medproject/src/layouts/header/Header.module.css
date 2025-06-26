@@ -8,6 +8,9 @@
     position: relative;
     z-index: 20;
     margin : 2rem 0;
+    padding: 1rem;
+    border-radius: 30px;
+    background-color: #e0ffe0;
 }
 
 /* --- Logo --- */
@@ -42,8 +45,8 @@
 }
 
 /* --- Naviqasiya Linkləri --- */
-ul {
-    width: 50%;
+.navLinks {
+    width: 40%;
     display: flex;
     list-style: none;
     justify-content: space-between;
@@ -52,7 +55,7 @@ ul {
     overflow: visible;
 }
 
-ul li {
+.navLinks li {
     color: #222;
     cursor: pointer;
     font-weight: 500;
@@ -62,16 +65,35 @@ ul li {
     overflow: visible;
 }
 
-ul li a {
+.navLinks li a {
     font-size: 1.18rem;
-    /* Daha böyük ölçü */
     text-decoration: none;
     color: inherit;
+    position: relative;
     transition: color 0.3s;
+    overflow: visible;
 }
 
-ul li:hover,
-ul li a:hover {
+.navLinks li a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #1a8f3c 0%, #2bff00 100%);
+    border-radius: 2px;
+    transition: width 0.5s cubic-bezier(.4,0,.2,1);
+    z-index: 2;
+}
+
+.navLinks li a:hover::after,
+.navLinks li:hover > a::after {
+    width: 100%;
+}
+
+.navLinks li:hover,
+.navLinks li a:hover {
     color: #1a8f3c;
 }
 
@@ -124,11 +146,10 @@ ul li a:hover {
 
 /* --- İkonlar --- */
 .icons {
-    min-width: 120px;
+    width: 7%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 1.2rem;
     cursor: pointer;
 }
 
@@ -137,6 +158,12 @@ ul li a:hover {
     position: relative;
     display: flex;
     align-items: center;
+    font-size: 1.3rem;
+    transition: all 0.3s;
+
+    &:hover {
+        color: #1a8f3c;
+    }
 }
 
 .fa,
@@ -145,7 +172,7 @@ ul li a:hover {
     font-size: 1.3rem;
     cursor: pointer;
     transition: color 0.3s, background 0.3s;
-    padding: 6px;
+    padding: 10px;
     border-radius: 50%;
 }
 
@@ -179,7 +206,7 @@ ul li a:hover {
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 24px rgba(44, 222, 80, 0.12);
-    padding: 12px 0;
+    padding: 1rem;
     min-width: 180px;
     z-index: 30;
     animation: dropdownIn 0.18s;
@@ -269,9 +296,10 @@ ul li a:hover {
     .header {
         width: 96%;
         gap: 0.5rem;
+        padding: 1rem ;
     }
 
-    ul {
+    .navLinks {
         gap: 1rem;
     }
 
@@ -284,8 +312,8 @@ ul li a:hover {
 @media (max-width: 576px) {
     .header {
         width: 90%;
-        margin: 0;
-        padding: 20px 0;
+        margin: 1rem 0;
+        padding: 1rem;
         min-height: 56px;
     }
 
@@ -299,7 +327,7 @@ ul li a:hover {
         font-size: 2rem;
     }
 
-    ul,
+    .navLinks,
     .icons {
         display: none !important;
     }

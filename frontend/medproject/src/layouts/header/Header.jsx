@@ -118,11 +118,10 @@ const Header = () => {
     <div className={styles.header}>
       <div className={styles.logo}>
         <a href="/" className={styles.logoLink}>
-          <span className={styles.logoMed}>Med</span>
-          <span className={styles.logoOnline}>Online</span>
+          <span className={styles.logoMed}>Med</span><span className={styles.logoOnline}>Online</span>
         </a>
       </div>
-      <ul>
+      <ul className={styles.navLinks}>
         <li><a href="/">Home</a></li>
         <li><a href="/about">About</a></li>
         <li
@@ -141,7 +140,7 @@ const Header = () => {
                   key={s}
                   href="#"
                   className={styles.categoryDropdownItem}
-                  // gələcəkdə: onClick={() => navigate(`/category/${s}`)}
+                // gələcəkdə: onClick={() => navigate(`/category/${s}`)}
                 >
                   {s}
                 </a>

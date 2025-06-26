@@ -8,7 +8,7 @@ import Loader from '../components/loader/Loader'
 function Layout() {
     return (
         <div className={style.layout}>
-            <Header />
+            <div className={style.header}><Header /></div>
             <Suspense fallback={<Loader />}>
                 <Outlet />
             </Suspense>
