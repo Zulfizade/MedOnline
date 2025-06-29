@@ -65,7 +65,7 @@ export const registerAdmin = async (req, res) => {
 // ✅ Doctor Kayıt
 export const registerDoctor = async (req, res) => {
   try {
-    const { name, email, password, confirmPassword, university, specialty } = req.body;
+    const { name, email, password, confirmPassword, university, specialty, description } = req.body;
 
     if (password !== confirmPassword) {
       return res.status(400).json({ message: "Şifreler uyuşmuyor" });
@@ -89,7 +89,8 @@ export const registerDoctor = async (req, res) => {
       password: hashedPassword,
       university,
       certificates: [certificate],
-      specialty, // <-- ƏLAVƏ ET!
+      specialty,
+      description, // <-- ƏLAVƏ OLUNDU
       isVerified: false,
       role: "doctor",
     });

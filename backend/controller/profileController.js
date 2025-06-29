@@ -61,6 +61,13 @@ export const updateName = async (req, res) => {
   res.json({ name: req.userDoc.name });
 };
 
+// Description dəyiş
+export const updateDescription = async (req, res) => {
+  req.userDoc.description = req.body.description;
+  await req.userDoc.save();
+  res.json({ description: req.userDoc.description });
+};
+
 // Email dəyişmək üçün kod göndər
 export const requestEmailChange = async (req, res) => {
   const { newEmail } = req.body;

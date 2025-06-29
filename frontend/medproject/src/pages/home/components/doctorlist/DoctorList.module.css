@@ -1,0 +1,123 @@
+.doctorListSection {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem 0;
+    background-color: aliceblue;
+    gap: 3rem;
+    padding: 3rem 0;
+
+    .title {
+        font-size: 2rem;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .doctorGrid {
+        width: 80%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+
+        .doctorCard {
+            width: 24%;
+            height: 400px;
+            background: #fff;
+            border-radius: 50% 50% 0 0;
+            box-shadow: 0 2px 16px rgba(44, 222, 80, 0.08);
+            border: 1.5px solid #e6eaf0;
+            gap: 0.8rem;
+            padding: 28px 34px 38px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Poppins', 'Roboto', Arial, sans-serif;
+            transition: box-shadow 1s, border 1s;
+            z-index: 1;
+            cursor: pointer;
+        }
+
+        .doctorCard::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(0deg, #1a8f3c 0%, #00b4d8 100%);
+            opacity: 0.93;
+            z-index: 0;
+            transition: bottom 1s cubic-bezier(.4, 1.6, .4, 1), opacity 1s;
+            pointer-events: none;
+        }
+
+        .doctorCard:hover::before {
+            bottom: 0;
+            opacity: 1;
+        }
+
+        .doctorCard:hover {
+            box-shadow: 0 6px 32px rgba(44, 222, 80, 0.14);
+            border: 1.5px solid #1a8f3c;
+        }
+
+        .doctorCard>* {
+            position: relative;
+            z-index: 1;
+        }
+
+        .docName {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #14224a;
+            text-align: center;
+            letter-spacing: 0.5px;
+            transition: color 0.5s;
+        }
+
+        .docSpecialty {
+            font-size: 1rem;
+            color: #1a8f3c;
+            margin-bottom: 0.7rem;
+            text-align: center;
+            font-weight: 500;
+            transition: color 0.5s;
+        }
+
+        .docDescription {
+            font-size: 1rem;
+            font-weight: 900;
+            color: #444;
+            margin-bottom: 1.1rem;
+            text-align: center;
+            font-family: 'Roboto', Arial, sans-serif;
+            transition: color 0.5s;
+        }
+
+        .doctorCard:hover .docName,
+        .doctorCard:hover .docSpecialty,
+        .doctorCard:hover .docDescription {
+            color: #fff;
+        }
+
+        .doctorProfile {
+            width: 200px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img {
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+        }
+    }
+}

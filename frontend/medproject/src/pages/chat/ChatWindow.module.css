@@ -1,0 +1,114 @@
+.chatWindow {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #fff;
+}
+
+.header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1.5px solid #e6eaf0;
+  font-weight: 700;
+  color: #1a8f3c;
+  font-size: 1.15rem;
+  background: #f7fafc;
+}
+
+.chatWith {
+  font-size: 1.08rem;
+}
+
+.messages {
+  flex: 1;
+  padding: 1.2rem 1.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  background: #f9fdfb;
+}
+
+.myMessage {
+  align-self: flex-end;
+  background: linear-gradient(90deg, #1a8f3c 0%, #00b4d8 100%);
+  color: #fff;
+  padding: 0.7rem 1.1rem;
+  border-radius: 18px 18px 4px 18px;
+  max-width: 70%;
+  font-size: 1rem;
+  box-shadow: 0 2px 8px rgba(44,222,80,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  word-break: break-word;
+}
+
+.theirMessage {
+  align-self: flex-start;
+  background: #e0ffe0;
+  color: #14224a;
+  padding: 0.7rem 1.1rem;
+  border-radius: 18px 18px 18px 4px;
+  max-width: 70%;
+  font-size: 1rem;
+  box-shadow: 0 2px 8px rgba(44,222,80,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  word-break: break-word;
+}
+
+.time {
+  font-size: 0.82rem;
+  color: #b0b0b0;
+  align-self: flex-end;
+  margin-top: 2px;
+}
+
+.inputBar {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-top: 1.5px solid #e6eaf0;
+  background: #fff;
+  gap: 0.7rem;
+}
+
+.inputBar input {
+  flex: 1;
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  border: 1.5px solid #e6eaf0;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.15s;
+}
+
+.inputBar input:focus {
+  border: 1.5px solid #1a8f3c;
+}
+
+.inputBar button {
+  background: linear-gradient(90deg, #00b4d8 0%, #1a8f3c 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1.2rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.18s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inputBar button:hover {
+  background: linear-gradient(90deg, #1a8f3c 0%, #00b4d8 100%);
+}
+
+.emptyChat {
+  color: #aaa;
+  font-size: 1.1rem;
+  text-align: center;
+  margin-top: 4rem;
+}

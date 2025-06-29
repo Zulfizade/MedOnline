@@ -15,6 +15,8 @@ const DoctorRegister = lazy(() => import("../pages/register/DoctorRegister"));
 const Admin = lazy(() => import("../pages/admin/Admin"));
 const AdminLogin = lazy(() => import("../pages/admin/AdminLogin"));
 const Profile = lazy(() => import("../pages/profile/Profile"));
+const DoctorDetail = lazy(() => import("../pages/doctorDetail/DoctorDetail"));
+const ChatPage = lazy(() => import("../pages/chat/ChatPage"));
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +28,7 @@ export const router = createBrowserRouter([
       { path: '/contact', element: <Contact /> },
       { path: '/tips', element: <Tips /> },
       { path: '/category', element: <Category /> },
+      { path: '/doctor/:id', element: <DoctorDetail /> },
     ]
   },
   { path: '*', element: <ErrorPage /> },
@@ -35,5 +38,6 @@ export const router = createBrowserRouter([
   { path: '/dashboard', element: <Admin /> },
   { path: '/admin-login', element: <AdminLogin /> },
   { path: '/profile', element: <Profile /> },
+  { path: '/chat', element: <ChatPage /> },
 
 ]);

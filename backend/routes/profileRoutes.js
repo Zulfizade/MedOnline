@@ -8,6 +8,7 @@ import {
   deleteCertificate,
   uploadProfilePhoto as uploadProfilePhotoController,
   deleteProfilePhoto,
+  updateDescription,
 } from "../controller/profileController.js";
 
 const router = express.Router();
@@ -21,5 +22,6 @@ router.post(
 router.delete("/profile-photo", protect, deleteProfilePhoto);
 router.post("/certificate", protect, uploadCertificate.single("certificate"), uploadCertificateController);
 router.delete("/certificate", protect, deleteCertificate);
+router.patch("/description", protect, updateDescription);
 
 export default router;

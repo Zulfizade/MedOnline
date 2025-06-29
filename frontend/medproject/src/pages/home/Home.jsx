@@ -4,6 +4,7 @@ import Carousel from './components/carousel/Carousel'
 import AboutUs from './components/aboutus/AboutUs'
 import Services from './components/services/Services'
 import BlogUs from './components/blogus/BlogUs'
+import DoctorList from './components/doctorlist/DoctorList'
 
 function Home() {
   return (
@@ -11,6 +12,7 @@ function Home() {
       <Carousel />
       <AboutUs  />
       <Services />
+      <DoctorList />
       <BlogUs />
     </div>
   )

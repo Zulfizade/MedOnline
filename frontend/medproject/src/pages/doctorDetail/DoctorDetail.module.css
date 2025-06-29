@@ -1,0 +1,118 @@
+.doctorDetail {
+  max-width: 900px;
+  margin: 3rem auto;
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 8px 32px rgba(44,222,80,0.10);
+  padding: 2.5rem 2rem;
+  font-family: 'Poppins', 'Roboto', Arial, sans-serif;
+}
+
+.profileSection {
+  display: flex;
+  gap: 2.5rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.avatar {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #1a8f3c;
+  background: #f7fafc;
+  box-shadow: 0 2px 16px rgba(44,222,80,0.10);
+}
+
+.infoSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  justify-content: flex-start;
+}
+
+.infoSection h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #14224a;
+  margin-bottom: 0.2rem;
+  letter-spacing: 0.5px;
+}
+
+.specialty {
+  font-size: 1.15rem;
+  color: #1a8f3c;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.description {
+  font-size: 1.08rem;
+  color: #333;
+  margin-bottom: 0.2rem;
+  line-height: 1.6;
+}
+
+.university {
+  font-size: 1.02rem;
+  color: #555;
+  margin-bottom: 0.2rem;
+}
+
+.certificates {
+  font-size: 1.02rem;
+  color: #222;
+  margin-bottom: 0.7rem;
+}
+
+.certificates ul {
+  margin: 0.3rem 0 0 1.1rem;
+  padding: 0;
+}
+
+.certificates li {
+  font-size: 0.98rem;
+  color: #1a8f3c;
+  margin-bottom: 0.2rem;
+}
+
+.certificates a {
+  color: #1a8f3c;
+  text-decoration: underline;
+  transition: color 0.18s;
+}
+
+.certificates a:hover {
+  color: #00b4d8;
+}
+
+.chatBtn {
+  margin-top: 1.2rem;
+  background: linear-gradient(90deg, #00b4d8 0%, #1a8f3c 100%);
+  color: #fff;
+  font-size: 1.08rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 28px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(44,222,80,0.10);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: background 0.18s, box-shadow 0.18s;
+}
+
+.chatBtn:hover {
+  background: linear-gradient(90deg, #1a8f3c 0%, #00b4d8 100%);
+  box-shadow: 0 4px 16px rgba(44,222,80,0.18);
+}
+
+.notFound {
+  text-align: center;
+  color: #ff4136;
+  margin-top: 2rem;
+  font-size: 1.2rem;
+}

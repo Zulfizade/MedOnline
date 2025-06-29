@@ -232,7 +232,7 @@
 .dropdownItem {
     padding: 8px 18px;
     font-size: 0.98rem;
-    color: #1a8f3c;
+    color: #000000;
     cursor: pointer;
     border-bottom: 1px solid #f2f2f2;
     transition: background 0.2s, color 0.2s;

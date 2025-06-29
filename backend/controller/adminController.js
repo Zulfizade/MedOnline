@@ -12,6 +12,16 @@ export const getPendingDoctors = async (req, res) => {
   }
 };
 
+// Təsdiqlənmiş doctorları gətir
+export const getApprovedDoctors = async (req, res) => {
+  try {
+    const doctors = await DoctorModel.find({ isVerified: true });
+    res.json(doctors);
+  } catch (error) {
+    res.status(500).json({ message: "Server xətası" });
+  }
+};
+
 // Bütün patientləri gətir
 export const getAllPatients = async (req, res) => {
   try {

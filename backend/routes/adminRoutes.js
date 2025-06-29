@@ -2,6 +2,7 @@ import express from "express";
 import {
   approveDoctor,
   getPendingDoctors,
+  getApprovedDoctors,
   getAllPatients,
   deleteDoctor,
   rejectDoctor,
@@ -13,6 +14,7 @@ const router = express.Router();
 
 router.get("/pending-doctors", protect, requireAdmin, getPendingDoctors);
 router.get("/patients", protect, requireAdmin, getAllPatients);
+router.get("/approved-doctors", getApprovedDoctors);
 
 router.patch("/approve-doctor/:id", protect, requireAdmin, approveDoctor);
 router.patch("/reject-doctor/:id", protect, requireAdmin, rejectDoctor);

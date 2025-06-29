@@ -16,7 +16,6 @@ const Header = () => {
   const navigate = useNavigate();
   const user = useSelector(state => state.user.info);
   const notifications = useSelector(state => state.notifications.items);
-  const notificationCount = user && Array.isArray(notifications) ? notifications.length : 0;
 
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
@@ -25,6 +24,7 @@ const Header = () => {
   const [search, setSearch] = useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileCategoryOpen, setMobileCategoryOpen] = useState(false);
+  const [localNotifications, setLocalNotifications] = useState([]);
   const userMenuRef = useRef(null);
   const notificationRef = useRef(null);
   const searchRef = useRef(null);
@@ -43,6 +43,13 @@ const Header = () => {
       dispatch(clearNotifications());
     }
   }, [user, dispatch]);
+
+  // Redux-dan gələn bildirişləri local state-ə yaz (yalnız dəyişəndə)
+  useEffect(() => {
+    if (Array.isArray(notifications)) {
+      setLocalNotifications(notifications);
+    }
+  }, [notifications]);
 
   // Dropdown-ları çöldən klikləyəndə bağla
   useEffect(() => {
@@ -75,7 +82,14 @@ const Header = () => {
   };
 
   // Bildirişə klik
-  const handleNotificationItemClick = (msg) => {
+  const handleNotificationItemClick = async (msg) => {
+    setLocalNotifications(prev => prev.filter(n => n._id !== msg._id));
+    try {
+      await fetch(`/api/chat/read/${msg._id}`, { method: "PATCH", credentials: "include" });
+      dispatch(fetchNotifications());
+    } catch {
+      // Error intentionally ignored
+    }
     navigate(`/chat?with=${msg.sender?._id}`);
     setShowNotifications(false);
   };
@@ -140,16 +154,16 @@ const Header = () => {
         {user && (
           <div ref={notificationRef} style={{ position: "relative" }}>
             <i className='fa-solid fa-bell' onClick={handleNotificationClick}>
-              {Array.isArray(notifications) && notifications.length > 0 && (
+              {Array.isArray(localNotifications) && localNotifications.length > 0 && (
                 <span className={styles.notificationBadge}>
-                  {notificationCount}
+                  {localNotifications.length}
                 </span>
               )}
             </i>
             {showNotifications && (
               <div className={styles.dropdown} style={{ right: 0, minWidth: 220, maxHeight: 300, overflowY: "auto" }}>
-                {Array.isArray(notifications) && notifications.length > 0 ? (
-                  notifications.map((msg) => (
+                {Array.isArray(localNotifications) && localNotifications.length > 0 ? (
+                  localNotifications.map((msg) => (
                     <div
                       key={msg._id}
                       className={styles.dropdownItem}
@@ -157,7 +171,7 @@ const Header = () => {
                       tabIndex={0}
                       role="button"
                     >
-                      <strong>{msg.sender?.name || "Unknown"}</strong>: {msg.message}
+                      <strong>{msg.sender?.name || "Unknown"}</strong> tərəfindən mesajınız var
                     </div>
                   ))
                 ) : (
@@ -216,7 +230,6 @@ const Header = () => {
                 <>
                   <a href="/profile">Profil</a>
                   <button onClick={() => {
-                    // Logout üçün
                     window.location.href = "/logout";
                   }}>Çıxış</button>
                 </>

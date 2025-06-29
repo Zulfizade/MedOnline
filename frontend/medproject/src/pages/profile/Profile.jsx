@@ -21,12 +21,14 @@ const Profile = () => {
   const [showEmailModal, setShowEmailModal] = useState(false);
   const [emailCode, setEmailCode] = useState("");
   const [localLoading, setLocalLoading] = useState(false);
+  const [description, setDescription] = useState(""); // Yeni state
 
   // user dəyişəndə state-ləri yenilə
   useEffect(() => {
     if (user) {
       setName(user.name || "");
       setEmail(user.email || "");
+      setDescription(user.description || ""); // Yeni state üçün
       setPreviewPhoto(user.profilePhoto ? `/uploads/profile_photos/${user.profilePhoto}` : "");
       setCertificates(user.certificates || []);
     }
@@ -119,6 +121,12 @@ const Profile = () => {
         changed.push("Email (doğrulama tələb olunur)");
       }
 
+      // Description dəyiş
+      if (description !== user.description) {
+        await axios.patch("/api/profile/description", { description });
+        changed.push("Haqqında");
+      }
+
       await dispatch(fetchUser());
       setProfilePhoto(null);
       setNewCertificate(null);
@@ -200,6 +208,19 @@ const Profile = () => {
 
         <label>Email:</label>
         <input value={email} onChange={e => setEmail(e.target.value)} />
+
+        {user.role === "doctor" && (
+          <>
+            <label>Haqqında (description):</label>
+            <textarea
+              value={description}
+              onChange={e => setDescription(e.target.value)}
+              rows={3}
+              className={styles.input}
+              placeholder="Qısa özünüz haqqında"
+            />
+          </>
+        )}
 
         {user.role === "doctor" && (
           <div className={styles.certSection}>
