@@ -88,7 +88,7 @@ export const registerDoctor = async (req, res) => {
       email,
       password: hashedPassword,
       university,
-      certificate,
+      certificates: [certificate],
       specialty, // <-- ƏLAVƏ ET!
       isVerified: false,
       role: "doctor",

@@ -6,36 +6,25 @@ import AdminModel from "../models/adminModel.js";
 export const protect = async (req, res, next) => {
   try {
     const token = req.cookies.token;
-    
-
-    if (!token) {
+    if (!token)
       return res.status(401).json({ message: "Yetkisiz erişim. Token yok." });
-    }
-
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    
 
-    let user;
+    let userDoc;
     if (decoded.role === "doctor") {
-      user = await DoctorModel.findById(decoded.id);
+      userDoc = await DoctorModel.findById(decoded.id);
     } else if (decoded.role === "patient") {
-      user = await PatientModel.findById(decoded.id);
+      userDoc = await PatientModel.findById(decoded.id);
     } else if (decoded.role === "admin") {
-      user = await AdminModel.findById(decoded.id);
+      userDoc = await AdminModel.findById(decoded.id);
     }
-
-    if (!user) {
+    if (!userDoc)
       return res.status(401).json({ message: "Kullanıcı bulunamadı" });
-    }
 
-    req.user = {
-      id: user._id,
-      role: decoded.role,
-    };
-
+    req.user = { id: userDoc._id, role: decoded.role };
+    req.userDoc = userDoc; // Əlavə et!
     next();
   } catch (error) {
-    console.error("authMiddleware hata:", error.message);
     return res
       .status(401)
       .json({ message: "Geçersiz veya süresi dolmuş token" });

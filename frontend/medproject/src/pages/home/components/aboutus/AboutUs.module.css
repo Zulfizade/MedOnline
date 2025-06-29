@@ -94,7 +94,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  transition: color 0.2s;
+  transition: color 0.7s;
 }
 .overlayLeft a:hover {
   color: #0074D9;
@@ -124,7 +124,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  transition: color 0.2s;
+  transition: color 0.5s;
   cursor: pointer;
 
 

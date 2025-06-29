@@ -1,24 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUser, clearUser } from "../../redux/reducers/userSlice";
+import { fetchUser } from "../../redux/reducers/userSlice";
 import { fetchNotifications, clearNotifications } from "../../redux/reducers/notificationSlice";
-import { logout } from "../../redux/reducers/authSlice";
 import styles from "./Header.module.css";
+import ProfileDropdown from "./ProfileDropdown";
 
 const specialties = [
-  "Kardioloq",
-  "Nevroloq",
-  "Cərrah",
-  "Pediatr",
-  "Dermatoloq",
-  "Oftalmoloq",
-  "Stomatoloq",
-  "Psixiatr",
-  "Endokrinoloq",
-  "Onkoloq",
-  "Ortoped",
-  "Digər"
+  "Kardioloq", "Nevroloq", "Cərrah", "Pediatr", "Dermatoloq", "Oftalmoloq",
+  "Stomatoloq", "Psixiatr", "Endokrinoloq", "Onkoloq", "Ortoped", "Digər"
 ];
 
 const Header = () => {
@@ -84,30 +74,6 @@ const Header = () => {
     }
   };
 
-  // User menu click
-  const handleSignIn = () => {
-    navigate('/login');
-    setShowUserMenu(false);
-  };
-  const handleSignUpPatient = () => {
-    navigate('/PatientRegister');
-    setShowUserMenu(false);
-  };
-  const handleSignUpDoctor = () => {
-    navigate('/DoctorRegister');
-    setShowUserMenu(false);
-  };
-  const handleProfile = () => {
-    navigate('/profile');
-    setShowUserMenu(false);
-  };
-  const handleLogout = async () => {
-    await dispatch(logout());
-    dispatch(clearUser());
-    setShowUserMenu(false);
-    navigate('/');
-  };
-
   // Bildirişə klik
   const handleNotificationItemClick = (msg) => {
     navigate(`/chat?with=${msg.sender?._id}`);
@@ -136,12 +102,7 @@ const Header = () => {
           {showCategory && (
             <div className={styles.categoryDropdown}>
               {specialties.map(s => (
-                <a
-                  key={s}
-                  href="#"
-                  className={styles.categoryDropdownItem}
-                // gələcəkdə: onClick={() => navigate(`/category/${s}`)}
-                >
+                <a key={s} href="#" className={styles.categoryDropdownItem}>
                   {s}
                 </a>
               ))}
@@ -175,33 +136,15 @@ const Header = () => {
             </div>
           )}
         </div>
-        {/* User Icon & Dropdown */}
-        <div ref={userMenuRef} style={{ position: "relative" }}>
-          <i className='fa fa-user' onClick={handleUserIconClick}></i>
-          {showUserMenu && (
-            <div className={styles.dropdown} style={{ right: 0, minWidth: 180 }}>
-              {!user ? (
-                <>
-                  <button className={styles.dropdownBtn} onClick={handleSignIn}>Sign In</button>
-                  <button className={styles.dropdownBtn} onClick={handleSignUpPatient}>Sign Up Patient</button>
-                  <button className={styles.dropdownBtn} onClick={handleSignUpDoctor}>Sign Up Doctor</button>
-                </>
-              ) : (
-                <>
-                  <button className={styles.dropdownBtn} onClick={handleProfile}>Profile</button>
-                  <button className={styles.dropdownBtn} onClick={handleLogout}>Logout</button>
-                </>
-              )}
-            </div>
-          )}
-        </div>
-        {/* Bell Icon & Dropdown */}
+        {/* Bell Icon & Dropdown - YALNIZ LOGIN OLUNUBSA */}
         {user && (
           <div ref={notificationRef} style={{ position: "relative" }}>
             <i className='fa-solid fa-bell' onClick={handleNotificationClick}>
-              <span className={styles.notificationBadge}>
-                {notificationCount}
-              </span>
+              {Array.isArray(notifications) && notifications.length > 0 && (
+                <span className={styles.notificationBadge}>
+                  {notificationCount}
+                </span>
+              )}
             </i>
             {showNotifications && (
               <div className={styles.dropdown} style={{ right: 0, minWidth: 220, maxHeight: 300, overflowY: "auto" }}>
@@ -224,6 +167,25 @@ const Header = () => {
             )}
           </div>
         )}
+        {/* User Icon & Dropdown */}
+        <div ref={userMenuRef} style={{ position: "relative" }}>
+          {user?.profilePhoto ? (
+            <img
+              src={user?.profilePhoto ? `http://localhost:9012/uploads/profile_photos/${user.profilePhoto}` : "/default-avatar.png"}
+              alt="profile"
+              className={styles.profileAvatar}
+              onClick={handleUserIconClick}
+              style={{width: 30, height: 30, borderRadius: "50%", cursor: "pointer", objectFit: "cover"}}
+            />
+          ) : (
+            <i className='fa fa-user' onClick={handleUserIconClick}></i>
+          )}
+          {showUserMenu && (
+            <div className={styles.dropdowns}>
+              <ProfileDropdown user={user} onClose={() => setShowUserMenu(false)} />
+            </div>
+          )}
+        </div>
       </div>
       <button className={styles.bars} onClick={() => setMobileMenuOpen(true)}>
         <i className="fa fa-bars"></i>
@@ -250,7 +212,21 @@ const Header = () => {
               )}
               <a href="/tips">Tips</a>
               <a href="/contact">Contact</a>
-              {/* Burada user və bildirişlər də əlavə edə bilərsən */}
+              {user ? (
+                <>
+                  <a href="/profile">Profil</a>
+                  <button onClick={() => {
+                    // Logout üçün
+                    window.location.href = "/logout";
+                  }}>Çıxış</button>
+                </>
+              ) : (
+                <>
+                  <a href="/login">Daxil ol</a>
+                  <a href="/PatientRegister">Qeydiyyat (Pasiyent)</a>
+                  <a href="/DoctorRegister">Qeydiyyat (Həkim)</a>
+                </>
+              )}
             </div>
           </nav>
         </>

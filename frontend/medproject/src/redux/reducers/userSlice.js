@@ -1,43 +1,48 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../axiosInstance';
 
-export const fetchUser = createAsyncThunk(
-  'user/fetchUser',
-  async (_, { rejectWithValue }) => {
-    try {
-      const res = await axios.get('/api/auth/me');
-      return res.data;
-    } catch (err) {
-      return rejectWithValue(err.response?.data?.message || "User fetch error");
-    }
+// Async thunk: İstifadəçini gətir
+export const fetchUser = createAsyncThunk('user/fetchUser', async (_, thunkAPI) => {
+  try {
+    const { data } = await axios.get('/api/auth/me');
+    return data.user;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response?.data?.message || "İstifadəçi tapılmadı");
   }
-);
+});
 
 const userSlice = createSlice({
   name: 'user',
-  initialState: { info: null, status: 'idle', error: null },
+  initialState: {
+    info: null,
+    loading: false,
+    error: null,
+  },
   reducers: {
-    clearUser(state) {
-      state.info = null;
-      state.status = 'idle';
-      state.error = null;
-    }
+    setUser: (state, action) => {
+      Object.assign(state, { info: action.payload, error: null, loading: false });
+    },
+    clearUser: (state) => {
+      Object.assign(state, { info: null, error: null, loading: false });
+    },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchUser.pending, (state) => { state.status = 'loading'; })
-      .addCase(fetchUser.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.info = action.payload || null;
+      .addCase(fetchUser.pending, (state) => {
+        state.loading = true;
         state.error = null;
       })
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        state.info = action.payload;
+        state.loading = false;
+      })
       .addCase(fetchUser.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.payload || action.error.message;
+        state.loading = false;
+        state.error = action.payload;
         state.info = null;
       });
   },
 });
 
-export const { clearUser } = userSlice.actions;
+export const { setUser, clearUser } = userSlice.actions;
 export default userSlice.reducer;

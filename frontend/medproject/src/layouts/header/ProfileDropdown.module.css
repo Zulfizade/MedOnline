@@ -1,0 +1,38 @@
+.dropdownRoot {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  min-width: 200px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(60, 60, 120, 0.18), 0 1.5px 4px rgba(0,0,0,0.08);
+  padding: 10px 0;
+  z-index: 100;
+  border: 1px solid #f0f0f0;
+  animation: dropdownFadeIn 0.18s;
+}
+
+@keyframes dropdownFadeIn {
+  from { opacity: 0; transform: translateY(-10px);}
+  to   { opacity: 1; transform: translateY(0);}
+}
+
+.dropdownItem {
+  padding: 12px 24px;
+  font-size: 15px;
+  color: #222;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+}
+
+.dropdownItem:hover {
+  background: #e0ffe0;
+  color: #1a8f3c;
+}

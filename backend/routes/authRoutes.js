@@ -23,7 +23,9 @@ router.post('/register/patient', registerPatient);
 router.post('/register/admin', registerAdmin); // Admin kaydı
 router.post('/login', login);
 router.post('/logout', logout);
-router.get('/me', protect, getMe);
+router.get('/me', protect, (req, res) => {
+  res.json({ user: req.userDoc });
+});
 
 
 export default router;

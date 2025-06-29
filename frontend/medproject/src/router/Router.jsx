@@ -14,6 +14,7 @@ const PatientRegister = lazy(() => import("../pages/register/PatientRegister"));
 const DoctorRegister = lazy(() => import("../pages/register/DoctorRegister"));
 const Admin = lazy(() => import("../pages/admin/Admin"));
 const AdminLogin = lazy(() => import("../pages/admin/AdminLogin"));
+const Profile = lazy(() => import("../pages/profile/Profile"));
 
 export const router = createBrowserRouter([
   {
@@ -32,5 +33,7 @@ export const router = createBrowserRouter([
   { path: '/PatientRegister', element: <PatientRegister /> },
   { path: '/DoctorRegister', element: <DoctorRegister /> },
   { path: '/dashboard', element: <Admin /> },
-  { path: '/admin-login', element: <AdminLogin /> }
+  { path: '/admin-login', element: <AdminLogin /> },
+  { path: '/profile', element: <Profile /> },
+
 ]);

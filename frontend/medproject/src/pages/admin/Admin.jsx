@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../redux/axiosInstance";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 import { toast } from "react-toastify";
 import style from "./Admin.module.css";
 
@@ -66,7 +66,28 @@ function Admin() {
 
   return (
     <div className={style.adminPanelContainer}>
-      <h2 className={style.title}>Admin Panel</h2>
+      <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.5rem" }}>
+        <Link
+          to="/"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 8,
+            background: "linear-gradient(90deg, #2bff00 0%, #1a8f3c 100%)",
+            color: "#fff",
+            padding: "8px 18px",
+            borderRadius: 8,
+            fontWeight: 600,
+            textDecoration: "none",
+            fontSize: "1rem",
+            boxShadow: "0 2px 8px rgba(44,222,80,0.10)",
+            transition: "background 0.2s"
+          }}
+        >
+          <i className="fa fa-home"></i> Ana Səhifə
+        </Link>
+        <h2 className={style.title}>Admin Panel</h2>
+      </div>
       <div className={style.tabButtons}>
         <button
           className={`${style.tabBtn} ${tab === "doctors" ? style.active : ""}`}
@@ -108,14 +129,23 @@ function Admin() {
                     <td>{doc.university}</td>
                     <td>{doc.specialty}</td>
                     <td>
-                      <a
-                        className={style.certificateLink}
-                        href={`http://localhost:9012/${doc.certificate.replace(/\\/g, "/")}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Bax
-                      </a>
+                      {Array.isArray(doc.certificates) && doc.certificates.length > 0 ? (
+                        doc.certificates.map((cert, idx) =>
+                          cert ? (
+                            <a
+                              key={idx}
+                              className={style.certificateLink}
+                              href={`http://localhost:9012/${cert.replace(/\\/g, "/")}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              Bax {idx + 1}
+                            </a>
+                          ) : null
+                        )
+                      ) : (
+                        <span>Yoxdur</span>
+                      )}
                     </td>
                     <td>
                       <span
