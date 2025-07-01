@@ -126,6 +126,7 @@ export const getNotifications = async (req, res) => {
 };
 
 // Mesajı okundu olarak işaretle
+// Mesajı oxundu kimi işarələmək əvəzinə, oxunan mesajı silirik (bildiriş siyahısından tamamilə çıxır)
 export const markAsRead = async (req, res) => {
   try {
     const { messageId } = req.params;
@@ -141,16 +142,17 @@ export const markAsRead = async (req, res) => {
       return res.status(404).json({ message: "Mesaj bulunamadı" });
     }
 
-    if (message.receiver.toString() !== userId) {
+    // Yalnız alıcı öz mesajını silə bilər (hər ikisini stringə çevir)
+    if (message.receiver.toString() !== userId.toString()) {
       return res.status(403).json({ message: "Yetkisiz işlem" });
     }
 
-    message.isRead = true;
-    await message.save();
+    // Mesajı tamamilə sil (yalnız oxunmamış bildirişlər üçün)
+    await MessageModel.deleteOne({ _id: messageId });
 
-    return res.status(200).json({ message: "Mesaj okundu olarak işaretlendi" });
+    return res.status(200).json({ message: "Mesaj oxundu və silindi" });
   } catch (error) {
-    console.error("Okuma hatası:", error);
+    console.error("Okuma/silme hatası:", error);
     return res.status(500).json({ message: "Sunucu hatası" });
   }
 };
@@ -173,12 +175,12 @@ export const deleteMessageForMe = async (req, res) => {
     }
 
     if (
-      message.sender.toString() === userId &&
+      message.sender.toString() === userId.toString() &&
       message.senderModel === userModel
     ) {
       message.senderDeleted = true;
     } else if (
-      message.receiver.toString() === userId &&
+      message.receiver.toString() === userId.toString() &&
       message.receiverModel === userModel
     ) {
       message.receiverDeleted = true;
@@ -192,5 +194,25 @@ export const deleteMessageForMe = async (req, res) => {
   } catch (error) {
     console.error("Mesaj silme hatası:", error);
     return res.status(500).json({ message: "Sunucu hatası" });
+  }
+};
+
+// Tüm mesajları çek
+export const getAllMessages = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const userModel = req.user.role === "doctor" ? "Doctor" : "Patient";
+    const messages = await MessageModel.find({
+      $or: [
+        { sender: userId, senderModel: userModel, senderDeleted: false },
+        { receiver: userId, receiverModel: userModel, receiverDeleted: false },
+      ],
+    })
+      .populate("sender", "name email role profilePhoto")
+      .populate("receiver", "name email role profilePhoto")
+      .sort({ createdAt: -1 });
+    res.status(200).json(messages);
+  } catch (error) {
+    res.status(500).json({ message: "Sunucu hatası" });
   }
 };

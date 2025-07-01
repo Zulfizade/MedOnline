@@ -6,6 +6,7 @@ import {
   getNotifications,
   markAsRead,
   deleteMessageForMe,
+  getAllMessages,
 } from '../controller/chatController.js';
 
 const router = express.Router();
@@ -15,5 +16,6 @@ router.get('/notifications/all', protect, getNotifications);  // önce spesifik 
 router.get('/:otherUserId/:otherUserModel', protect, getMessages);  // sonra parametreli route
 router.patch('/read/:messageId', protect, markAsRead);
 router.delete('/delete-for-me/:messageId', protect, deleteMessageForMe);
+router.get('/all-messages', protect, getAllMessages);
 
 export default router;

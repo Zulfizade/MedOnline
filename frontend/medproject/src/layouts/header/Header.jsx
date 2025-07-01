@@ -5,6 +5,7 @@ import { fetchUser } from "../../redux/reducers/userSlice";
 import { fetchNotifications, clearNotifications } from "../../redux/reducers/notificationSlice";
 import styles from "./Header.module.css";
 import ProfileDropdown from "./ProfileDropdown";
+import { toast } from "react-toastify";
 
 const specialties = [
   "Kardioloq", "Nevroloq", "Cərrah", "Pediatr", "Dermatoloq", "Oftalmoloq",
@@ -24,18 +25,15 @@ const Header = () => {
   const [search, setSearch] = useState("");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileCategoryOpen, setMobileCategoryOpen] = useState(false);
-  const [localNotifications, setLocalNotifications] = useState([]);
   const userMenuRef = useRef(null);
   const notificationRef = useRef(null);
   const searchRef = useRef(null);
   const categoryRef = useRef(null);
 
-  // İlk renderdə user məlumatını çək
   useEffect(() => {
     dispatch(fetchUser());
   }, [dispatch]);
 
-  // User dəyişəndə bildirişləri çək və ya təmizlə
   useEffect(() => {
     if (user) {
       dispatch(fetchNotifications());
@@ -44,14 +42,6 @@ const Header = () => {
     }
   }, [user, dispatch]);
 
-  // Redux-dan gələn bildirişləri local state-ə yaz (yalnız dəyişəndə)
-  useEffect(() => {
-    if (Array.isArray(notifications)) {
-      setLocalNotifications(notifications);
-    }
-  }, [notifications]);
-
-  // Dropdown-ları çöldən klikləyəndə bağla
   useEffect(() => {
     function handleClickOutside(event) {
       if (userMenuRef.current && !userMenuRef.current.contains(event.target)) setShowUserMenu(false);
@@ -63,16 +53,9 @@ const Header = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Search iconuna basanda dropdown aç
   const handleSearchIconClick = () => setShowSearch(v => !v);
-
-  // User iconuna basanda dropdown aç
   const handleUserIconClick = () => setShowUserMenu(v => !v);
-
-  // Bell iconuna basanda dropdown aç
   const handleNotificationClick = () => setShowNotifications(v => !v);
-
-  // Search input submit
   const handleSearch = (e) => {
     e.preventDefault();
     if (search.trim()) {
@@ -80,15 +63,17 @@ const Header = () => {
       setShowSearch(false);
     }
   };
-
-  // Bildirişə klik
   const handleNotificationItemClick = async (msg) => {
-    setLocalNotifications(prev => prev.filter(n => n._id !== msg._id));
+    const receiverId = typeof msg.receiver === "object" ? msg.receiver._id : msg.receiver;
+    if (!receiverId || receiverId !== user._id) {
+      toast.error("Bu bildirişi oxundu kimi işarələyə bilməzsiniz.");
+      return;
+    }
     try {
       await fetch(`/api/chat/read/${msg._id}`, { method: "PATCH", credentials: "include" });
-      dispatch(fetchNotifications());
-    } catch {
-      // Error intentionally ignored
+      await dispatch(fetchNotifications());
+    } catch (e) {
+      console.error(e);
     }
     navigate(`/chat?with=${msg.sender?._id}`);
     setShowNotifications(false);
@@ -127,7 +112,6 @@ const Header = () => {
         <li><a href="/contact">Contact</a></li>
       </ul>
       <div className={styles.icons}>
-        {/* Search Icon & Dropdown */}
         <div ref={searchRef} style={{ position: "relative" }}>
           <i className='fa fa-search' onClick={handleSearchIconClick}></i>
           {showSearch && (
@@ -150,20 +134,19 @@ const Header = () => {
             </div>
           )}
         </div>
-        {/* Bell Icon & Dropdown - YALNIZ LOGIN OLUNUBSA */}
         {user && (
           <div ref={notificationRef} style={{ position: "relative" }}>
             <i className='fa-solid fa-bell' onClick={handleNotificationClick}>
-              {Array.isArray(localNotifications) && localNotifications.length > 0 && (
+              {Array.isArray(notifications) && notifications.length > 0 && (
                 <span className={styles.notificationBadge}>
-                  {localNotifications.length}
+                  {notifications.length}
                 </span>
               )}
             </i>
             {showNotifications && (
               <div className={styles.dropdown} style={{ right: 0, minWidth: 220, maxHeight: 300, overflowY: "auto" }}>
-                {Array.isArray(localNotifications) && localNotifications.length > 0 ? (
-                  localNotifications.map((msg) => (
+                {Array.isArray(notifications) && notifications.length > 0 ? (
+                  notifications.map((msg) => (
                     <div
                       key={msg._id}
                       className={styles.dropdownItem}
@@ -181,7 +164,6 @@ const Header = () => {
             )}
           </div>
         )}
-        {/* User Icon & Dropdown */}
         <div ref={userMenuRef} style={{ position: "relative" }}>
           {user?.profilePhoto ? (
             <img
