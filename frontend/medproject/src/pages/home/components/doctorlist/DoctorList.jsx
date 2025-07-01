@@ -15,7 +15,7 @@ const DoctorList = () => {
 
   return (
     <section className={styles.doctorListSection}>
-      <h2 className={styles.title}>Step Heal with Heart</h2>
+      <h2 className={styles.title}>Trusted Medical Experts</h2>
       <div className={styles.doctorGrid}>
         {doctors.map(doc => (
           <div
@@ -28,9 +28,10 @@ const DoctorList = () => {
           >
             <div className={styles.doctorProfile}>
               <img
-                src={doc.profilePhoto ? `http://localhost:9012/uploads/profile_photos/${doc.profilePhoto}` : "/default-avatar.png"}
+                src={doc.profilePhoto ? `http://localhost:9012/uploads/profile_photos/${doc.profilePhoto}` : "/default-avatar.png" }
                 alt={doc.name}
                 className={styles.avatar}
+                style={{ width: "200px", height: "200px", borderRadius: "100px 100px 0 0", objectFit: "cover"}}
               />
             </div>
             <div className={styles.docName}>Dr.{doc.name}</div>

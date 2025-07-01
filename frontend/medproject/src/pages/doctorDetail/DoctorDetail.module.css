@@ -1,6 +1,6 @@
 .doctorDetail {
-  max-width: 900px;
-  margin: 3rem auto;
+  width: 90%;
+  margin: 7rem auto;
   background: #fff;
   border-radius: 22px;
   box-shadow: 0 8px 32px rgba(44,222,80,0.10);
@@ -9,6 +9,7 @@
 }
 
 .profileSection {
+  width: 100%;
   display: flex;
   gap: 2.5rem;
   align-items: flex-start;
@@ -16,9 +17,7 @@
 }
 
 .avatar {
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
+  width: 30%;
   object-fit: cover;
   border: 3px solid #1a8f3c;
   background: #f7fafc;
@@ -26,6 +25,7 @@
 }
 
 .infoSection {
+  width: 70%;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -89,6 +89,7 @@
 }
 
 .chatBtn {
+  width: 20%;
   margin-top: 1.2rem;
   background: linear-gradient(90deg, #00b4d8 0%, #1a8f3c 100%);
   color: #fff;

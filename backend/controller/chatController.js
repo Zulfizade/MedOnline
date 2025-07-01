@@ -147,10 +147,10 @@ export const markAsRead = async (req, res) => {
       return res.status(403).json({ message: "Yetkisiz işlem" });
     }
 
-    // Mesajı tamamilə sil (yalnız oxunmamış bildirişlər üçün)
-    await MessageModel.deleteOne({ _id: messageId });
-
-    return res.status(200).json({ message: "Mesaj oxundu və silindi" });
+    // Mesajı silmə! Yalnız oxundu kimi işarələ
+    message.isRead = true;
+    await message.save();
+    return res.status(200).json({ message: "Mesaj oxundu kimi işarələndi" });
   } catch (error) {
     console.error("Okuma/silme hatası:", error);
     return res.status(500).json({ message: "Sunucu hatası" });

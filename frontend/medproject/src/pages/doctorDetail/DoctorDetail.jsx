@@ -24,7 +24,7 @@ const DoctorDetail = () => {
         <img
           src={doctor.profilePhoto ? `http://localhost:9012/uploads/profile_photos/${doctor.profilePhoto}` : "/default-avatar.png"}
           alt={doctor.name}
-          className={style.avatar}
+          className={style.avatar} 
         />
         <div className={style.infoSection}>
           <h2>Dr. {doctor.name}</h2>

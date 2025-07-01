@@ -26,7 +26,7 @@
             width: 24%;
             height: 400px;
             background: #fff;
-            border-radius: 50% 50% 0 0;
+            border-radius:100px 100px 0 0;
             box-shadow: 0 2px 16px rgba(44, 222, 80, 0.08);
             border: 1.5px solid #e6eaf0;
             gap: 0.8rem;
@@ -95,7 +95,7 @@
             color: #444;
             margin-bottom: 1.1rem;
             text-align: center;
-            font-family: 'Roboto', Arial, sans-serif;
+            font-family:'Times New Roman', serif;
             transition: color 0.5s;
         }
 
@@ -105,19 +105,6 @@
             color: #fff;
         }
 
-        .doctorProfile {
-            width: 200px;
-            height: 200px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            img {
-                width: 100%;
-                height: 100%;
-                border-radius: 50%;
-                object-fit: cover;
-            }
-        }
+        
     }
 }
