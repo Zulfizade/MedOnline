@@ -1,0 +1,67 @@
+.aboutHeader {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem;
+
+    background-image: url("https://images01.nicepage.com/1d/b3/1db315228240eb2ed1a3432ab564f4f6.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.aboutHeader .headerImage {
+    width: 35%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+
+
+}
+
+.aboutHeader .headerImage img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.aboutHeader .headerContent {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.aboutHeader .headerContent h1 {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 3.5rem;
+    color: #ffffff;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    width: 80%;
+}
+
+.aboutHeader .headerContent p {
+    font-family: 'Arial', sans-serif;
+    font-size: 1.2rem;
+    color: #d5d5d5;
+}
+
+.aboutHeader .headerContent button {
+    width: 10rem;
+    height: 3rem;
+    background-color: #ffffff;
+    color: #000000;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+}
+
+.aboutHeader .headerContent button:hover {
+    background-color: #ff7a7a;
+    color: rgb(255, 255, 255);
+}

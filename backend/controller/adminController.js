@@ -39,10 +39,13 @@ export const approveDoctor = async (req, res) => {
     if (!doctor) return res.status(404).json({ message: "Doktor tapılmadı" });
     doctor.isVerified = true;
     doctor.rejected = false;
+    // gender sahəsi undefined olarsa, köhnə doctor-lar üçün default dəyər ver
+    if (!doctor.gender) doctor.gender = "male";
     await doctor.save();
     res.json({ message: "Doktor təsdiqləndi" });
   } catch (error) {
-    res.status(500).json({ message: "Server xətası" });
+    console.error("[approveDoctor]", error);
+    res.status(500).json({ message: "Server xətası", error: error?.message, stack: error?.stack });
   }
 };
 
@@ -53,10 +56,13 @@ export const rejectDoctor = async (req, res) => {
     if (!doctor) return res.status(404).json({ message: "Doktor tapılmadı" });
     doctor.isVerified = false;
     doctor.rejected = true;
+    // gender sahəsi undefined olarsa, köhnə doctor-lar üçün default dəyər ver
+    if (!doctor.gender) doctor.gender = "male";
     await doctor.save();
     res.json({ message: "Doktor təsdiqlənmədi (ləğv olundu)" });
   } catch (error) {
-    res.status(500).json({ message: "Server xətası" });
+    console.error("[rejectDoctor]", error);
+    res.status(500).json({ message: "Server xətası", error: error?.message, stack: error?.stack });
   }
 };
 

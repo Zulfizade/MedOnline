@@ -1,0 +1,40 @@
+.statTable {
+  width: 100%;
+  border-collapse: collapse;
+  background: #f8fafc;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(25, 118, 210, 0.04);
+}
+.statTable th, .statTable td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: left;
+}
+.statTable th {
+  background: #e3eafc;
+  color: #1976d2;
+  font-weight: 600;
+}
+.statTable tr:last-child td {
+  border-bottom: none;
+}
+.actionBtn {
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 16px;
+  margin-right: 8px;
+  font-size: 0.98rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.actionBtn.delete {
+  background: #757575;
+}
+.actionBtn:disabled {
+  background: #bdbdbd;
+  cursor: not-allowed;
+}

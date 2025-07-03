@@ -1,0 +1,54 @@
+.adminPanelWrapper {
+  display: flex;
+  min-height: 100vh;
+  background: #f5f7fa;
+}
+
+.sidebar {
+  width: 220px;
+  background: #1976d2;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 32px;
+  box-shadow: 2px 0 12px rgba(25, 118, 210, 0.08);
+}
+.logoBlock {
+  margin-bottom: 32px;
+  width: 120px;
+  display: flex;
+  justify-content: center;
+}
+.logo {
+  width: 100px;
+  height: auto;
+}
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+}
+.nav button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.1rem;
+  padding: 14px 0;
+  width: 100%;
+  text-align: left;
+  padding-left: 32px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.nav button:hover,
+.nav .active {
+  background: #1565c0;
+  color: #ffeb3b;
+}
+.content {
+  flex: 1;
+  padding: 40px 32px;
+  min-width: 0;
+}

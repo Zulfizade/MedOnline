@@ -65,7 +65,7 @@ export const registerAdmin = async (req, res) => {
 // ✅ Doctor Kayıt
 export const registerDoctor = async (req, res) => {
   try {
-    const { name, email, password, confirmPassword, university, specialty, description } = req.body;
+    const { name, email, password, confirmPassword, university, specialty, description, gender } = req.body;
 
     if (password !== confirmPassword) {
       return res.status(400).json({ message: "Şifreler uyuşmuyor" });
@@ -74,6 +74,10 @@ export const registerDoctor = async (req, res) => {
     const existingDoctor = await DoctorModel.findOne({ email });
     if (existingDoctor) {
       return res.status(400).json({ message: "Bu email zaten kayıtlı" });
+    }
+
+    if (!gender || !['male','female'].includes(gender)) {
+      return res.status(400).json({ message: "Cins seçilməlidir!" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -87,19 +91,16 @@ export const registerDoctor = async (req, res) => {
       name,
       email,
       password: hashedPassword,
+      gender,
       university,
       certificates: [certificate],
       specialty,
-      description, // <-- ƏLAVƏ OLUNDU
+      description,
       isVerified: false,
       role: "doctor",
     });
 
     await doctor.save();
-
-    // Qeydiyyatdan sonra cookie YAZMA!
-    // const token = createToken(doctor);
-    // res.cookie(...)
 
     res.status(201).json({
       message: "Doktor kaydedildi, admin onayı bekleniyor",
@@ -108,6 +109,7 @@ export const registerDoctor = async (req, res) => {
         name: doctor.name,
         email: doctor.email,
         specialty: doctor.specialty,
+        gender: doctor.gender,
         isVerified: doctor.isVerified,
       },
     });
@@ -120,7 +122,7 @@ export const registerDoctor = async (req, res) => {
 // ✅ Patient Kayıt
 export const registerPatient = async (req, res) => {
   try {
-    const { name, email, password, confirmPassword } = req.body;
+    const { name, email, password, confirmPassword, gender } = req.body;
 
     if (password !== confirmPassword) {
       return res.status(400).json({ message: "Şifreler uyuşmuyor" });
@@ -131,20 +133,21 @@ export const registerPatient = async (req, res) => {
       return res.status(400).json({ message: "Bu email zaten kayıtlı" });
     }
 
+    if (!gender || !['male','female'].includes(gender)) {
+      return res.status(400).json({ message: "Cins seçilməlidir!" });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 12);
 
     const patient = new PatientModel({
       name,
       email,
       password: hashedPassword,
+      gender,
       role: "patient",
     });
 
     await patient.save();
-
-    // Qeydiyyatdan sonra cookie YAZMA!
-    // const token = createToken(patient);
-    // res.cookie(...)
 
     res.status(201).json({
       message: "Hasta kaydedildi",
@@ -152,6 +155,7 @@ export const registerPatient = async (req, res) => {
         id: patient._id,
         name: patient.name,
         email: patient.email,
+        gender: patient.gender,
       },
     });
   } catch (error) {

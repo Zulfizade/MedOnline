@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import MessageModel from "../models/Message.js";
 import PatientModel from "../models/patientModel.js";
 import DoctorModel from "../models/doctorModel.js";
-import { sendOfflineEmailNotification } from "../utils/emailSender.js";
+
 
 // MongoDB ObjectId kontrolü
 const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id);
@@ -44,13 +44,7 @@ export const sendMessage = async (req, res) => {
 
     await newMessage.save();
 
-    // Mail bildirimi gönder
-    try {
-      await sendOfflineEmailNotification(receiverId, message);
-      console.log("📧 Mail bildirimi gönderildi.");
-    } catch (emailError) {
-      console.error("❌ Mail gönderme hatası:", emailError);
-    }
+
 
     return res.status(201).json({ message: "Mesaj gönderildi", newMessage });
   } catch (error) {

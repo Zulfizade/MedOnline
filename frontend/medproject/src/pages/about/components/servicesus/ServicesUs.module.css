@@ -1,0 +1,52 @@
+.servicesUs {
+    width: 100%;
+    height: 40vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.servicesUsList {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    flex-wrap: wrap;
+}
+
+.servicesUsList li {
+    width: 23%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    border: 1px solid #0066ff;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background: #b0b0b0;
+    background: linear-gradient(90deg, rgb(255, 255, 255) 0%, rgba(0, 235, 94, 1) 100%);
+}
+
+.servicesUsList li i {
+    font-size: 2rem;
+    color: #35addc;
+    padding: 0.6rem;
+    border-radius: 0.4rem;
+}
+
+.servicesUsList li h3 {
+    font-size: 1.2rem;
+    font-weight: lighter;
+    letter-spacing: 2px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: white;
+}
+
+.servicesUsItem {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem;
+}

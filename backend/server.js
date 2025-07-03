@@ -14,6 +14,10 @@ import adminRoutes from "./routes/adminRoutes.js";
 import testRoutes from "./routes/testRoutes.js";
 import profileRoutes from "./routes/profileRoutes.js";
 
+import contactRoutes from "./routes/contactRoutes.js";
+import tipRoutes from "./routes/tipRoutes.js";
+import statisticRoutes from "./routes/statisticRoutes.js";
+
 // Ortam değişkenlerini yükle
 dotenv.config();
 
@@ -43,6 +47,10 @@ app.use("/api/chat", chatRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/test", testRoutes);
 app.use("/api/profile", profileRoutes);
+
+app.use("/api/contact", contactRoutes);
+app.use("/api/tips", tipRoutes);
+app.use("/api/statistics", statisticRoutes);
 
 // Socket bağlantısı
 socketHandler(io);

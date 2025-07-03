@@ -1,0 +1,60 @@
+.tipsUs{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2rem 0;
+    padding: 2rem;
+    background: #f9f9f9;
+}
+
+.tipsUs .tipsUsImage{
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img{
+        width: 100%;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        object-fit: cover;
+    }
+}
+
+.tipsUs .tipsUsContent{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.tipsUs h1{
+    font-size: 3rem;
+    font-family: 'Times New Roman', Times, serif;
+    color: #333;
+}
+
+.tipsUs p{
+    width: 80%;
+    font-size: 1rem;
+    color: #666;
+}
+
+.tipsUs button{
+    padding: 10px 20px;
+    background-color: #4bff03;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.5s ease-in;
+}
+
+.tipsUs button:hover{
+    background-color: #ffffff;
+    color: #4bff03;
+}

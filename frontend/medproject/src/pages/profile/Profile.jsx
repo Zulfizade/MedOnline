@@ -232,14 +232,14 @@ const Profile = () => {
             />
             <ul className={styles.certList}>
               {certificates.map((cert, idx) => (
-                <li key={cert}>
-                  <a
-                    href={`/uploads/${cert.replace(/\\/g, "/")}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Bax {idx + 1}
-                  </a>
+                <li key={cert} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
+                  <img
+                    src={`http://localhost:9012/uploads/certificates/${cert.replace(/^.*certificates[\\/]/, '')}`}
+                    alt={`Sertifikat ${idx + 1}`}
+                    style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 6, background: '#f3f3f3', border: '1px solid #eee', cursor: 'pointer' }}
+                    onClick={() => window.open(`http://localhost:9012/uploads/certificates/${cert.replace(/^.*certificates[\\/]/, '')}`, '_blank')}
+                  />
+                  <span style={{ fontSize: 13 }}>Sertifikat {idx + 1}</span>
                   {idx !== 0 && (
                     <button type="button" onClick={() => handleCertDelete(cert)} disabled={localLoading}>
                       Sil

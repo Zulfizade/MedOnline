@@ -1,0 +1,41 @@
+.container {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(25, 118, 210, 0.08);
+  padding: 32px;
+  margin: 24px 0;
+}
+
+.header {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1976d2;
+  margin-bottom: 24px;
+}
+
+.tabs {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.tabButton {
+  background: #e3f2fd;
+  color: #1976d2;
+  border: none;
+  border-radius: 6px 6px 0 0;
+  padding: 10px 24px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.tabButton.active {
+  background: #1976d2;
+  color: #fff;
+}
+
+.tabContent {
+  margin-top: 0;
+}

@@ -1,4 +1,4 @@
-import { sendOfflineEmailNotification } from '../utils/emailSender.js';
+
 
 export const socketHandler = (io) => {
   const onlineUsers = new Map();
@@ -37,14 +37,6 @@ export const socketHandler = (io) => {
         receiverSockets.forEach((socketId) => {
           io.to(socketId).emit('receiveMessage', data);
         });
-      } else {
-        console.log(`🔴 [${receiverId}] OFFLINE sayıldı, email bildirimi gönderilecek.`);
-        try {
-          await sendOfflineEmailNotification(receiverId, message);
-          console.log(`📧 Email gönderimi başarılı: ${receiverId}`);
-        } catch (error) {
-          console.error(`❌ Email gönderimi başarısız: ${error.message}`);
-        }
       }
     });
 

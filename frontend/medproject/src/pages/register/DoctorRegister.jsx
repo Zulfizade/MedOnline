@@ -30,7 +30,8 @@ const DoctorRegister = () => {
     specialty: "",
     password: "",
     confirmPassword: "",
-    certificate: null
+    certificate: null,
+    gender: ""
   });
   const [error, setError] = useState(null);
 
@@ -125,6 +126,28 @@ const DoctorRegister = () => {
           onChange={handleChange}
           required
         />
+        <div className={style.genderBlock}>
+          <label>
+            <input
+              type="radio"
+              name="gender"
+              value="male"
+              checked={form.gender === "male"}
+              onChange={handleChange}
+              required
+            /> Kişi
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="gender"
+              value="female"
+              checked={form.gender === "female"}
+              onChange={handleChange}
+              required
+            /> Qadın
+          </label>
+        </div>
         <input
           className={style.input}
           name="password"

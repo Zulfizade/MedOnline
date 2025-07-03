@@ -12,7 +12,7 @@ const ErrorPage = lazy(() => import("../pages/errorPage/ErrorPage"));
 const Login = lazy(() => import("../pages/login/Login"));
 const PatientRegister = lazy(() => import("../pages/register/PatientRegister"));
 const DoctorRegister = lazy(() => import("../pages/register/DoctorRegister"));
-const Admin = lazy(() => import("../pages/admin/Admin"));
+const AdminPanel = lazy(() => import("../pages/admin/AdminPanel"));
 const AdminLogin = lazy(() => import("../pages/admin/AdminLogin"));
 const Profile = lazy(() => import("../pages/profile/Profile"));
 const DoctorDetail = lazy(() => import("../pages/doctorDetail/DoctorDetail"));
@@ -35,7 +35,7 @@ export const router = createBrowserRouter([
   { path: '/login', element: <Login /> },
   { path: '/PatientRegister', element: <PatientRegister /> },
   { path: '/DoctorRegister', element: <DoctorRegister /> },
-  { path: '/dashboard', element: <Admin /> },
+  { path: '/dashboard', element: <AdminPanel /> },
   { path: '/admin-login', element: <AdminLogin /> },
   { path: '/profile', element: <Profile /> },
   { path: '/chat', element: <ChatPage /> },
