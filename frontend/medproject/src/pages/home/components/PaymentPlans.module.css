@@ -1,0 +1,8 @@
+.paymentSection { background: #181c2f; padding: 3rem 0 2rem 0; text-align: center; }
+.plans { display: flex; justify-content: center; gap: 2.5rem; margin-top: 2rem; flex-wrap: wrap; }
+.plan { background: #232946; border: 3px solid #3B82F6; border-radius: 1.5rem; padding: 2rem 2.5rem; min-width: 260px; box-shadow: 0 4px 24px rgba(59,130,246,0.10); display: flex; flex-direction: column; align-items: center; transition: box-shadow 0.2s, border 0.2s; }
+.plan h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+.price { font-size: 2.2rem; font-weight: 700; margin-bottom: 1.2rem; }
+.plan ul { list-style: none; padding: 0; margin: 0 0 1.5rem 0; color: #fff; font-size: 1.1rem; }
+.plan button { padding: 0.7rem 2.2rem; border: none; border-radius: 0.7rem; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+.plan button:disabled { background: #bdbdbd; color: #fff; cursor: not-allowed; }

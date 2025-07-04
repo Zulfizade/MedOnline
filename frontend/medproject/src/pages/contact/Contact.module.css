@@ -1,0 +1,88 @@
+.contact {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.contactForm {
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -10rem;
+    background-color: transparent;
+}
+
+.contactInfo {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.contactInfoList {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    list-style: none;
+    position: relative;
+    z-index: 0;
+}
+
+
+.contactInfoList li {
+    width: 100%;
+    color: #000000;
+    padding: 1.2rem 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.10), 0 1.5px 6px rgba(167, 139, 250, 0.08);
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(.4,2,.6,1), box-shadow 0.2s, background 0.3s;
+    font-size: 1.35rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    margin-bottom: 0.5rem; 
+    z-index: 1000000000;
+}
+
+.contactInfoList li:hover {
+    background: linear-gradient(90deg, #6366F1 0%, #F472B6 100%);
+    color: #fff;
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.18), 0 2px 8px rgba(244, 114, 182, 0.10);
+}
+
+.answer {
+    position: absolute;
+    left: 0;
+    bottom: -130%;
+    background-color: white;
+    color: #22223b;
+    box-shadow: 0 8px 32px rgba(59, 130, 246, 0.13), 0 2px 8px rgba(244, 114, 182, 0.10);
+    border-radius: 14px;
+    padding: 1.1rem 1.5rem;
+    z-index: 999;
+    font-size: 1.08rem;
+    font-weight: 400;
+    min-width: 240px;
+    border: 1.5px solid #e0e7ff;
+    animation: fadeInDrop 0.25s cubic-bezier(.4,2,.6,1);
+    margin-bottom: 8px;
+}
+
+@keyframes fadeInDrop {
+    0% { opacity: 0; transform: translateY(-10px) scale(0.98); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}

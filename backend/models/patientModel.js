@@ -9,7 +9,11 @@ const patientSchema = mongoose.Schema({
   profilePhoto: { type: String, default: "" },
   emailVerified: { type: Boolean, default: false },
   emailVerificationCode: { type: String, default: "" },
-  pendingEmail: { type: String, default: "" }
+  pendingEmail: { type: String, default: "" },
+  plan: { type: String, enum: ['free', 'pro', 'vip'], default: 'free' },
+  planExpires: { type: Date },
+  doctorLimit: { type: Number, default: 10 },
+  mailLimit: { type: Number, default: 5 }
 }, { timestamps: true });
 
 const PatientModel = mongoose.model('Patient', patientSchema);

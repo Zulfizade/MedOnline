@@ -1,0 +1,190 @@
+.fakeCardModal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.fakeCardContent {
+  background: #fff;
+  padding: 2.5rem 2.2rem 2rem 2.2rem;
+  border-radius: 1.2rem;
+  min-width: 350px;
+  max-width: 95vw;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  color: #232946;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.fakeCardForm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin-top: 1rem;
+}
+.fakeCardForm label {
+  font-size: 1.05rem;
+  color: #232946;
+  margin-bottom: 0.3rem;
+}
+.fakeCardForm input {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border-radius: 0.5rem;
+  border: 1.5px solid #e0e0e0;
+  font-size: 1.08rem;
+  background: #f7f7fa;
+  color: #232946;
+  margin-top: 0.2rem;
+  transition: border 0.2s;
+}
+.fakeCardForm input:focus {
+  border: 1.5px solid #3B82F6;
+  outline: none;
+}
+.fakeCardActions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  justify-content: flex-end;
+}
+.fakeCardForm button[type="submit"] {
+  background: #3B82F6;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.7rem 2.2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.fakeCardForm button[type="submit"]:hover {
+  background: #2563eb;
+}
+.fakeCardForm button[type="button"] {
+  background: #e0e0e0;
+  color: #232946;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.fakeCardForm button[type="button"]:hover {
+  background: #bdbdbd;
+}
+.fakeCardLogos {
+  display: flex;
+  gap: 0.7rem;
+  margin-bottom: 1.2rem;
+}
+.fakeCardLogo {
+  height: 28px;
+  width: auto;
+  opacity: 0.85;
+}
+.paymentSection {
+  background: #f7f7fa;
+  padding: 2rem;
+  text-align: center;
+  margin: 2rem;
+}
+.plans {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+.plan {
+  background: #fff;
+  border: 2px solid #e0e0e0;
+  border-radius: 1.1rem;
+  padding: 1.5rem 2rem;
+  min-width: 220px;
+  box-shadow: 0 2px 12px rgba(59,130,246,0.07);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow 0.2s, border 0.2s;
+}
+.plan h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.7rem;
+  font-weight: 700;
+}
+.price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #3B82F6;
+}
+.plan ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.1rem 0;
+  color: #232946;
+  font-size: 1rem;
+}
+.plan button {
+  padding: 0.6rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 0.5rem;
+}
+.plan button:disabled {
+  background: #bdbdbd;
+  color: #fff;
+  cursor: not-allowed;
+}
+
+.fakeCardModal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.fakeCardContent {
+  background: #fff;
+  padding: 1.5rem 1.5rem 1.2rem 1.5rem;
+  border-radius: 1rem;
+  min-width: 300px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.10);
+  color: #232946;
+}
+.fakeCardForm label {
+  display: block;
+  margin-bottom: 0.7rem;
+  font-size: 1rem;
+  color: #232946;
+}
+.fakeCardForm input {
+  width: 100%;
+  padding: 0.45rem 0.7rem;
+  border-radius: 0.4rem;
+  border: 1px solid #bdbdbd;
+  margin-top: 0.2rem;
+  font-size: 1rem;
+  background: #f7f7fa;
+  color: #232946;
+}
+.fakeCardActions {
+  display: flex;
+  gap: 0.7rem;
+  margin-top: 1.2rem;
+  justify-content: flex-end;
+}

@@ -1,0 +1,74 @@
+.tips{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.tipsImage{
+    width: 100%;
+    object-fit: cover;
+}
+
+.tipsList{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    margin: 2rem 0;
+}
+
+.tip{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    cursor: pointer;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: #d8e3ff;
+    transition: all 0.5s ease-in-out;
+
+    &:hover{
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transform: scale(1.02);
+    }
+}
+
+.tipLeft{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img{
+        width: 100%;
+        object-fit: cover;
+        border-radius: 0 50% 50% 0;
+    }
+}
+
+.tipRight{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5rem;
+    
+}
+
+.tipRight h2{
+    font-size: 2rem;
+    font-weight: 600;
+    color: #3a4fa0; /* fallback for oklch(0.443 0.11 240.79) */
+}
+
+.tipRight p{
+    font-size: 1.2rem;
+    color: #333;
+}

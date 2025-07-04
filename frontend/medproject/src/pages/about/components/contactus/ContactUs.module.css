@@ -1,6 +1,6 @@
 .contactUsContainer {
     width: 100%;
-    background: #fff;
+    background-color: transparent;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -16,6 +16,8 @@
     flex-direction: column;
     gap: 1rem;
     padding: 1.5rem;
+    background-color: white;
+    border-radius: 1rem;
 }
 
 .contactForm input,

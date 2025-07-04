@@ -1,8 +1,11 @@
 import React from 'react'
+import style from './Category.module.css'
 
 function Category() {
   return (
-    <div>Category</div>
+    <div className={style.category}>
+
+    </div>
   )
 }
 

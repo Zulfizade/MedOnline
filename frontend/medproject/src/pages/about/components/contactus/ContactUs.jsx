@@ -44,7 +44,7 @@ const ContactUs = () => {
 
   return (
     <div className={styles.contactUsContainer}>
-      <h2>Bizimlə Əlaqə Saxlayın</h2>
+      <h2>Have a Question? Contact Us Today!</h2>
       <form onSubmit={handleSubmit} className={styles.contactForm}>
         <input
           type="text"
