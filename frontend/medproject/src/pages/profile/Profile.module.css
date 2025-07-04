@@ -1,54 +1,151 @@
+/* Modern profile page with blue/green theme */
 .profilePage {
-  max-width: 420px;
-  margin: 2rem auto;
+  max-width: 440px;
+  margin: 2.5rem auto;
   background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 4px 24px rgba(44, 222, 80, 0.08);
-  padding: 2.5rem 2rem 2rem 2rem;
+  border-radius: 18px;
+  box-shadow: 0 6px 32px rgba(39, 73, 206, 0.10), 0 1.5px 8px rgba(25, 136, 116, 0.08);
+  padding: 2.7rem 2.2rem 2.2rem 2.2rem;
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
+  gap: 1.5rem;
   align-items: center;
+  border: 1.5px solid #2749ce22;
+}
+
+.profileHeader {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 1.7rem;
+  width: 100%;
+  justify-content: flex-start;
+}
+
+.homeBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(90deg, #2749ce 0%, #198874 100%);
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1rem;
+  box-shadow: 0 2px 8px rgba(39, 73, 206, 0.10);
+  transition: background 0.2s;
+  border: none;
+}
+.homeBtn:hover {
+  background: linear-gradient(90deg, #198874 0%, #2749ce 100%);
+  color: #fff;
+}
+
+.profileTitle {
+  color: #2749ce;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
 }
 .profilePhotoSection {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.7rem;
 }
 .profileAvatarLarge {
-  width: 90px;
-  height: 90px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #1a8f3c;
-  background: #fff;
+  border: 2.5px solid #2749ce;
+  background: #f7faff;
+  box-shadow: 0 2px 8px #2749ce22;
 }
 .profileForm {
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  gap: 0.7rem;
   width: 100%;
 }
-.profileForm input {
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: 1px solid #e0ffe0;
+.profileForm input, .profileForm textarea {
+  padding: 8px 12px;
+  border-radius: 7px;
+  border: 1.5px solid #2749ce44;
   font-size: 1rem;
+  outline: none;
+  background: #f7faff;
+  margin-bottom: 2px;
+  transition: border 0.2s;
 }
-.profileForm button {
-  margin-top: 0.3rem;
-  background: #1a8f3c;
+.profileForm input:focus, .profileForm textarea:focus {
+  border: 1.5px solid #198874;
+}
+.input {
+  padding: 8px 12px;
+  border-radius: 7px;
+  border: 1.5px solid #2749ce44;
+  font-size: 1rem;
+  outline: none;
+  background: #f7faff;
+  margin-bottom: 2px;
+  transition: border 0.2s;
+}
+.input:focus {
+  border: 1.5px solid #198874;
+}
+.label {
+  color: #198874;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+.saveBtn {
+  margin-top: 0.7rem;
+  background: linear-gradient(90deg, #2749ce 0%, #198874 100%);
   color: #fff;
   border: none;
-  border-radius: 6px;
+  border-radius: 7px;
+  padding: 8px 18px;
+  cursor: pointer;
+  font-size: 1.08rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px #2749ce22;
+  transition: background 0.2s;
+}
+.saveBtn:hover {
+  background: linear-gradient(90deg, #198874 0%, #2749ce 100%);
+}
+.deletePhotoBtn, .deleteCertBtn {
+  background: #fff;
+  color: #2749ce;
+  border: 1.5px solid #2749ce;
+  border-radius: 7px;
   padding: 5px 14px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.98rem;
+  font-weight: 500;
+  margin-top: 0.3rem;
+  margin-left: 6px;
+  transition: background 0.2s, color 0.2s;
+}
+.deletePhotoBtn:hover, .deleteCertBtn:hover {
+  background: #2749ce;
+  color: #fff;
 }
 .certSection ul {
   list-style: none;
   padding: 0;
+}
+.certListItem {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 0.5rem;
+}
+.certText {
+  font-size: 13px;
+  color: #198874;
 }
 .certSection li {
   display: flex;
@@ -62,12 +159,19 @@
   margin-top: 0.5rem;
 }
 .certImage {
-  width: 80px;
-  height: 80px;
+  width: 48px;
+  height: 48px;
   object-fit: cover;
   border-radius: 8px;
-  border: 1.5px solid #1a8f3c;
+  border: 1.5px solid #198874;
   margin-right: 8px;
+  background: #f3f3f3;
+  border: 1.5px solid #2749ce44;
+  cursor: pointer;
+  transition: border 0.2s;
+}
+.certImage:hover {
+  border: 1.5px solid #198874;
 }
 .modalOverlay {
   position: fixed;

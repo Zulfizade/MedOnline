@@ -17,14 +17,27 @@ const Login = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     setError(null);
+    // 3 dəfə səhv parol üçün bloklama
+    const failCount = Number(localStorage.getItem("loginFailCount") || 0);
+    const blockUntil = Number(localStorage.getItem("loginBlockUntil") || 0);
+    if (blockUntil && Date.now() < blockUntil) {
+      setError("Çoxlu səhv cəhd! 5 dəqiqə sonra yenidən yoxlayın.");
+      return;
+    }
     try {
       const res = await dispatch(login(form)).unwrap();
       if (res && res.user) {
+        localStorage.removeItem("loginFailCount");
+        localStorage.removeItem("loginBlockUntil");
         await dispatch(fetchUser());
         toast.success("Giriş uğurlu!");
         navigate("/");
       } else {
         setError("Email və ya şifrə yanlışdır!");
+        localStorage.setItem("loginFailCount", String(failCount + 1));
+        if (failCount + 1 >= 3) {
+          localStorage.setItem("loginBlockUntil", String(Date.now() + 5 * 60 * 1000));
+        }
       }
     } catch (err) {
       setError(
@@ -33,6 +46,10 @@ const Login = () => {
         err?.error ||
         "Email və ya şifrə yanlışdır!"
       );
+      localStorage.setItem("loginFailCount", String(failCount + 1));
+      if (failCount + 1 >= 3) {
+        localStorage.setItem("loginBlockUntil", String(Date.now() + 5 * 60 * 1000));
+      }
     }
   };
 

@@ -22,8 +22,22 @@ const PatientRegister = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     setError(null);
-    if (form.password !== form.confirmPassword) {
+    // Parol validasiyası: min 8 simvol, həm hərf, həm rəqəm olmalıdır
+    const pwd = form.password;
+    if (pwd !== form.confirmPassword) {
       setError("Şifrələr uyğun deyil!");
+      return;
+    }
+    if (pwd.length < 8) {
+      setError("Şifrə minimum 8 simvol olmalıdır!");
+      return;
+    }
+    if (!/[a-zA-Z]/.test(pwd) || !/[0-9]/.test(pwd)) {
+      setError("Şifrə həm hərf, həm rəqəm içərməlidir!");
+      return;
+    }
+    if (/^[0-9]+$/.test(pwd) || /^[a-zA-Z]+$/.test(pwd)) {
+      setError("Şifrə yalnız hərf və ya yalnız rəqəm ola bilməz!");
       return;
     }
     try {

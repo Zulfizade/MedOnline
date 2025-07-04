@@ -10,7 +10,7 @@
     margin : 2rem 0;
     padding: 1rem;
     border-radius: 30px;
-    background-color: #e0ffe0;
+    background-color: white;
 }
 
 /* --- Logo --- */
@@ -32,7 +32,7 @@
     font-family: 'Poppins', 'Roboto', Arial, sans-serif;
     font-size: 2rem;
     font-weight: 700;
-    color: #0074D9;
+    color: #243784;
     letter-spacing: 1px;
 }
 
@@ -40,7 +40,7 @@
     font-family: 'Poppins', 'Roboto', Arial, sans-serif;
     font-size: 2rem;
     font-weight: 700;
-    color: #1a8f3c;
+    color: #186d5e;
     letter-spacing: 1px;
 }
 
@@ -56,7 +56,7 @@
 }
 
 .navLinks li {
-    color: #222;
+    color: #18574d;
     cursor: pointer;
     font-weight: 500;
     font-size: 1.08rem;
@@ -128,7 +128,7 @@
 .categoryDropdownItem {
     padding: 8px 18px;
     font-size: 1rem;
-    color: #222;
+    color: #18574d;
     text-decoration: none;
     cursor: pointer;
     transition: background 0.2s, color 0.2s;
@@ -158,6 +158,7 @@
     position: relative;
     display: flex;
     align-items: center;
+    color: #18574d;
     font-size: 1.3rem;
     transition: all 0.3s;
 
@@ -247,29 +248,62 @@
     color: #2bff00;
 }
 
+
 .searchDropdownInput {
     width: 180px;
     padding: 8px 12px;
-    border: 1px solid #e0e0e0;
+    border: 1.5px solid #2749ce;
     border-radius: 8px;
     font-size: 1rem;
     outline: none;
     margin-bottom: 8px;
-    background: #fafafa;
-    transition: border 0.2s, box-shadow 0.2s;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    background: #f4f8ff;
+    color: #2749ce;
+    transition: border 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s;
+    box-shadow: 0 1px 6px rgba(25, 136, 116, 0.10);
 }
 
 .searchDropdownInput:focus {
-    border: 1.5px solid #2bff00;
+    border: 1.5px solid #198874;
     background: #fff;
+    color: #198874;
+}
+
+/* Search dropdown results styling */
+.searchDropdownResults {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 24px rgba(39, 73, 206, 0.10);
+    padding: 0.5rem 0;
+    margin-top: 4px;
+    min-width: 180px;
+    z-index: 40;
+}
+
+.searchDropdownResultItem {
+    padding: 10px 18px;
+    font-size: 1rem;
+    color: #2749ce;
+    background: transparent;
+    cursor: pointer;
+    border-bottom: 1px solid #e6eaf8;
+    transition: background 0.2s, color 0.2s;
+}
+
+.searchDropdownResultItem:last-child {
+    border-bottom: none;
+}
+
+.searchDropdownResultItem:hover {
+    background: #198874;
+    color: #fff;
 }
 
 /* --- Bar (Mobil menyu açarı) --- */
 .bars {
     display: none;
     font-size: 2rem !important;
-    color: #222 !important;
+    color: #18574d !important;
     background: none;
     border: none;
     cursor: pointer;

@@ -41,7 +41,7 @@
     position: absolute;
     bottom: -10%;
     right: -40%;
-    background-color: rgba(255, 94, 94, 0.5);
+    background-color: #2749ce;
     z-index: 1;
     animation: slideInRight 2s cubic-bezier(.4,0,.2,1);
     display: flex;
@@ -71,7 +71,7 @@
 
 .leftOverlay h2{
     font-size: 2rem;
-    color: #4bff03;
+    color: #22a58b;
     font-family: 'Arial', sans-serif;
 }
 
@@ -83,18 +83,18 @@
 
 .leftOverlay button{
     padding: 10px 20px;
-    background-color: #4bff03;
+    background-color:#22a58b;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 1rem;
-    transition: all 0.5s ease-in;
+    transition: all 0.5s ease;
 }
 
 .leftOverlay button:hover{
     background-color: #ffffff;
-    color: #4bff03;
+    color: #22a58b;
 }
 
 .rightOverlay .categoryUsList{

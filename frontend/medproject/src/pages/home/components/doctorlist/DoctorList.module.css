@@ -5,14 +5,16 @@
     align-items: center;
     justify-content: center;
     margin: 2rem 0;
-    background-color: aliceblue;
+    background-color: #f1fcf8;
     gap: 3rem;
     padding: 3rem 0;
 
     .title {
+        font-family: Georgia, 'Times New Roman', Times, serif;
         font-size: 2rem;
         font-weight: 600;
         color: #333;
+        letter-spacing: 1px;
     }
 
     .doctorGrid {
@@ -49,7 +51,7 @@
             bottom: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(0deg, #1a8f3c 0%, #00b4d8 100%);
+            background: linear-gradient(0deg, #18574d 0%, #457aec 100%);
             opacity: 0.93;
             z-index: 0;
             transition: bottom 1s cubic-bezier(.4, 1.6, .4, 1), opacity 1s;

@@ -11,7 +11,7 @@
 }
 
 .service {
-  background: linear-gradient(135deg, #e0ffe0 60%, #f8fafc 100%);
+  background: linear-gradient(135deg, #99bff7 60%, #3cc5a8 100%);
   border-radius: 22px;
   box-shadow: 0 4px 32px rgba(44,222,80,0.10), 0 1.5px 0 #fff inset;
   padding: 2.2rem 1.5rem 2rem 1.5rem;
@@ -21,7 +21,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: transform 0.35s cubic-bezier(.4,0,.2,1), box-shadow 0.35s, background 0.35s;
+  transition: transform 0.35s cubic-bezier(.4,0,.2,1), box-shadow 0.35s, background 0.5s;
   position: relative;
   overflow: hidden;
   cursor: pointer;
@@ -42,7 +42,7 @@
 .service:hover {
   transform: translateY(-12px) scale(1.04) rotate(-1deg);
   box-shadow: 0 8px 40px rgba(26,143,60,0.18), 0 1.5px 0 #fff inset;
-  background: linear-gradient(135deg, #d0ffd0 60%, #e0f7fa 100%);
+  background: linear-gradient(135deg, #22a58b 60%, #2749ce 100%);
 }
 .service:hover::before {
   opacity: 1;
@@ -88,7 +88,7 @@
   font-family: 'Poppins', 'Roboto', Arial, sans-serif;
   font-size: 1.25rem;
   font-weight: 700;
-  color: #1a8f3c;
+  color: #184941;
   margin:1rem;
   letter-spacing: 0.5px;
   text-align: center;
@@ -102,7 +102,7 @@
 
 .serviceDescription {
   font-size: 1.05rem;
-  color: #333;
+  color: #305ce0;
   text-align: center;
   margin-bottom: 0;
   z-index: 1;

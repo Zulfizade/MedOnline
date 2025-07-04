@@ -40,9 +40,9 @@ function Contact() {
               key={idx}
               onMouseEnter={() => setOpenIndex(idx)}
               onMouseLeave={() => setOpenIndex(null)}
-              style={{ position: "relative", cursor: "pointer" }}
+              className={style.contactInfoItem}
             >
-              {item.question}
+              <span className={style.question}>{item.question}</span>
               {openIndex === idx && (
                 <div className={style.answer}>
                   {item.answer}

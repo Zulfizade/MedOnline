@@ -15,6 +15,7 @@ import adminRoutes from "./routes/adminRoutes.js";
 import testRoutes from "./routes/testRoutes.js";
 import profileRoutes from "./routes/profileRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
+import doctorRoutes from "./routes/doctorRoutes.js";
 import tipRoutes from "./routes/tipRoutes.js";
 import statisticRoutes from "./routes/statisticRoutes.js";
 
@@ -52,6 +53,7 @@ app.use("/api/payment", paymentRoutes);
 app.use("/api/user", userRoutes);
 
 app.use("/api/contact", contactRoutes);
+app.use("/api/doctors", doctorRoutes);
 app.use("/api/tips", tipRoutes);
 app.use("/api/statistics", statisticRoutes);
 

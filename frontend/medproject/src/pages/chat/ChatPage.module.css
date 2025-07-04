@@ -5,13 +5,14 @@
   margin: 2rem auto;
   background: #fff;
   border-radius: 18px;
-  box-shadow: 0 8px 32px rgba(44,222,80,0.10);
+  box-shadow: 0 8px 32px rgba(39,73,206,0.13), 0 2px 8px rgba(25,136,116,0.10);
   overflow: hidden;
+  border: 1.5px solid #2749ce22;
 }
 .chatListSection {
   width: 32%;
-  border-right: 1.5px solid #e6eaf0;
-  background: #f7fafc;
+  border-right: 1.5px solid #2749ce33;
+  background: #f7faff;
   overflow-y: auto;
 }
 .chatWindowSection {
@@ -25,19 +26,21 @@
   top: 24px;
   left: 24px;
   z-index: 10;
-  background: linear-gradient(90deg, #00b4d8 0%, #1a8f3c 100%);
+  background: linear-gradient(90deg, #2749ce 0%, #198874 100%);
   color: #fff;
   padding: 8px 20px;
   border-radius: 8px;
   font-weight: 600;
   text-decoration: none;
   font-size: 1rem;
-  box-shadow: 0 2px 8px rgba(44,222,80,0.10);
+  box-shadow: 0 2px 8px #2749ce22;
   transition: background 0.2s;
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  border: none;
 }
 .homeBtn:hover {
-  background: linear-gradient(90deg, #1a8f3c 0%, #00b4d8 100%);
+  background: linear-gradient(90deg, #198874 0%, #2749ce 100%);
+  color: #fff;
 }

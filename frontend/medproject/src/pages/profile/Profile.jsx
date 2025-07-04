@@ -11,6 +11,15 @@ const Profile = () => {
   const { info: user, loading, error } = useSelector(state => state.user);
   const dispatch = useDispatch();
 
+  // Refresh zamanı user yoxdursa və token varsa, user-i fetch et
+  useEffect(() => {
+    // Tokeni localStorage/cookie-dən yoxla (cookie ilə işləyir, backend withCredentials true)
+    if (!user) {
+      dispatch(fetchUser());
+    }
+    // eslint-disable-next-line
+  }, []);
+
   // BÜTÜN HOOK-LAR BURADA OLMALIDIR!
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -157,33 +166,16 @@ const Profile = () => {
   };
 
   // LOADING/ERROR/USER YOXLAMASI BURADA OLSUN!
-  if (loading) return <Loader />;
+  if (loading || !user) return <Loader />;
   if (error) return <div style={{ color: "red", textAlign: "center" }}>{error}</div>;
-  if (!user) return <div style={{ textAlign: "center" }}>İstifadəçi tapılmadı</div>;
 
   return (
     <div className={styles.profilePage}>
-      <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.5rem" }}>
-        <Link
-          to="/"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 8,
-            background: "linear-gradient(90deg, #2bff00 0%, #1a8f3c 100%)",
-            color: "#fff",
-            padding: "8px 18px",
-            borderRadius: 8,
-            fontWeight: 600,
-            textDecoration: "none",
-            fontSize: "1rem",
-            boxShadow: "0 2px 8px rgba(44,222,80,0.10)",
-            transition: "background 0.2s"
-          }}
-        >
+      <div className={styles.profileHeader}>
+        <Link to="/" className={styles.homeBtn}>
           <i className="fa fa-home"></i> Ana Səhifə
         </Link>
-        <h2>Profil</h2>
+        <h2 className={styles.profileTitle}>Profil</h2>
       </div>
       <form className={styles.profileForm} onSubmit={handleSave}>
         <div className={styles.profilePhotoSection}>
@@ -198,20 +190,20 @@ const Profile = () => {
             onChange={handlePhotoChange}
           />
           {previewPhoto && (
-            <button type="button" onClick={handleDeletePhoto} disabled={localLoading}>
+            <button type="button" onClick={handleDeletePhoto} disabled={localLoading} className={styles.deletePhotoBtn}>
               Profil şəklini sil
             </button>
           )}
         </div>
-        <label>Ad:</label>
-        <input value={name} onChange={e => setName(e.target.value)} />
+        <label className={styles.label}>Ad:</label>
+        <input value={name} onChange={e => setName(e.target.value)} className={styles.input} />
 
-        <label>Email:</label>
-        <input value={email} onChange={e => setEmail(e.target.value)} />
+        <label className={styles.label}>Email:</label>
+        <input value={email} onChange={e => setEmail(e.target.value)} className={styles.input} />
 
         {user.role === "doctor" && (
           <>
-            <label>Haqqında (description):</label>
+            <label className={styles.label}>Haqqında (description):</label>
             <textarea
               value={description}
               onChange={e => setDescription(e.target.value)}
@@ -224,24 +216,25 @@ const Profile = () => {
 
         {user.role === "doctor" && (
           <div className={styles.certSection}>
-            <label>Sertifikat əlavə et:</label>
+            <label className={styles.label}>Sertifikat əlavə et:</label>
             <input
               type="file"
               accept=".pdf,.jpg,.jpeg,.png"
               onChange={handleCertAdd}
+              className={styles.input}
             />
             <ul className={styles.certList}>
               {certificates.map((cert, idx) => (
-                <li key={cert} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
+                <li key={cert} className={styles.certListItem}>
                   <img
                     src={`http://localhost:9012/uploads/certificates/${cert.replace(/^.*certificates[\\/]/, '')}`}
                     alt={`Sertifikat ${idx + 1}`}
-                    style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 6, background: '#f3f3f3', border: '1px solid #eee', cursor: 'pointer' }}
+                    className={styles.certImage}
                     onClick={() => window.open(`http://localhost:9012/uploads/certificates/${cert.replace(/^.*certificates[\\/]/, '')}`, '_blank')}
                   />
-                  <span style={{ fontSize: 13 }}>Sertifikat {idx + 1}</span>
+                  <span className={styles.certText}>Sertifikat {idx + 1}</span>
                   {idx !== 0 && (
-                    <button type="button" onClick={() => handleCertDelete(cert)} disabled={localLoading}>
+                    <button type="button" onClick={() => handleCertDelete(cert)} disabled={localLoading} className={styles.deleteCertBtn}>
                       Sil
                     </button>
                   )}
@@ -251,7 +244,7 @@ const Profile = () => {
           </div>
         )}
 
-        <button type="submit" disabled={localLoading}>
+        <button type="submit" disabled={localLoading} className={styles.saveBtn}>
           {localLoading ? "Yüklənir..." : "Dəyişiklikləri təsdiqlə"}
         </button>
       </form>
@@ -263,10 +256,10 @@ const Profile = () => {
             <h4>Email təsdiqlə</h4>
             <p>Email ünvanına göndərilən kodu daxil et:</p>
             <form onSubmit={handleVerifyEmail}>
-              <input value={emailCode} onChange={e => setEmailCode(e.target.value)} />
-              <button type="submit">Təsdiqlə</button>
+              <input value={emailCode} onChange={e => setEmailCode(e.target.value)} className={styles.input} />
+              <button type="submit" className={styles.saveBtn}>Təsdiqlə</button>
             </form>
-            <button onClick={() => setShowEmailModal(false)}>Bağla</button>
+            <button onClick={() => setShowEmailModal(false)} className={styles.deletePhotoBtn}>Bağla</button>
           </div>
         </div>
       )}

@@ -15,7 +15,7 @@ const DoctorList = () => {
 
   return (
     <section className={styles.doctorListSection}>
-      <h2 className={styles.title}>Trusted Medical Experts</h2>
+      <h2 className={styles.title}>TRUSTED MEDICAL EXPERTS</h2>
       <div className={styles.doctorGrid}>
         {doctors.map(doc => (
           <div

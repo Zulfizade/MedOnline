@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import axios from "../../redux/axiosInstance";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser } from "../../redux/reducers/userSlice";
@@ -23,6 +24,8 @@ const Header = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [showCategory, setShowCategory] = useState(false);
   const [search, setSearch] = useState("");
+  const [doctorResults, setDoctorResults] = useState([]);
+  const [searchLoading, setSearchLoading] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileCategoryOpen, setMobileCategoryOpen] = useState(false);
   const userMenuRef = useRef(null);
@@ -56,10 +59,32 @@ const Header = () => {
   const handleSearchIconClick = () => setShowSearch(v => !v);
   const handleUserIconClick = () => setShowUserMenu(v => !v);
   const handleNotificationClick = () => setShowNotifications(v => !v);
+  // Debounced doctor search
+  useEffect(() => {
+    if (!showSearch || !search.trim()) {
+      setDoctorResults([]);
+      setSearchLoading(false);
+      return;
+    }
+    setSearchLoading(true);
+    const timeout = setTimeout(async () => {
+      try {
+        const res = await axios.get(`/api/doctors?name=${encodeURIComponent(search.trim())}`);
+        setDoctorResults(res.data || []);
+      } catch {
+        setDoctorResults([]);
+      } finally {
+        setSearchLoading(false);
+      }
+    }, 400);
+    return () => clearTimeout(timeout);
+  }, [search, showSearch]);
+
   const handleSearch = (e) => {
     e.preventDefault();
-    if (search.trim()) {
-      navigate(`/search?q=${encodeURIComponent(search)}`);
+    // Əgər nəticə varsa birinciyə yönləndir
+    if (doctorResults.length > 0) {
+      navigate(`/doctor/${doctorResults[0]._id}`);
       setShowSearch(false);
     }
   };
@@ -101,7 +126,16 @@ const Header = () => {
           {showCategory && (
             <div className={styles.categoryDropdown}>
               {specialties.map(s => (
-                <a key={s} href="#" className={styles.categoryDropdownItem}>
+                <a
+                  key={s}
+                  href={"/category/" + s.toLowerCase()}
+                  className={styles.categoryDropdownItem}
+                  onClick={e => {
+                    e.preventDefault();
+                    navigate("/category/" + s.toLowerCase());
+                    setShowCategory(false);
+                  }}
+                >
                   {s}
                 </a>
               ))}
@@ -115,21 +149,42 @@ const Header = () => {
         <div ref={searchRef} style={{ position: "relative" }}>
           <i className='fa fa-search' onClick={handleSearchIconClick}></i>
           {showSearch && (
-            <div className={styles.dropdown} style={{ right: 0, minWidth: 220 }}>
-              <form onSubmit={handleSearch}>
+            <div className={styles.dropdown} style={{ right: 0, minWidth: 260, maxWidth: 340 }}>
+              <form onSubmit={handleSearch} autoComplete="off">
                 <input
                   type="text"
                   value={search}
-                  placeholder="Search..."
+                  placeholder="Həkim axtar..."
                   className={styles.searchDropdownInput}
                   onChange={e => setSearch(e.target.value)}
                   autoFocus
                 />
               </form>
-              {search && (
-                <div className={styles.dropdownItem}>
-                  {search}
+              {searchLoading && (
+                <div className={styles.dropdownItem}>Axtarılır...</div>
+              )}
+              {!searchLoading && doctorResults.length > 0 && (
+                <div style={{maxHeight:180,overflowY:'auto'}}>
+                  {doctorResults.map(doc => (
+                    <div
+                      key={doc._id}
+                      className={styles.dropdownItem}
+                      style={{cursor:'pointer',display:'flex',alignItems:'center',gap:10}}
+                      onClick={() => {
+                        navigate(`/doctor/${doc._id}`);
+                        setShowSearch(false);
+                        setSearch("");
+                      }}
+                    >
+                      <img src={doc.profilePhoto ? `http://localhost:9012/uploads/profile_photos/${doc.profilePhoto}` : "/default-avatar.png"} alt="doctor" style={{width:32,height:32,borderRadius:6,objectFit:'cover',border:'1px solid #eee'}} />
+                      <span style={{fontWeight:500}}>{doc.name}</span>
+                      <span style={{fontSize:13,color:'#198874'}}>{doc.specialty}</span>
+                    </div>
+                  ))}
                 </div>
+              )}
+              {!searchLoading && search && doctorResults.length === 0 && (
+                <div className={styles.dropdownItem} style={{color:'#888'}}>Nəticə tapılmadı</div>
               )}
             </div>
           )}

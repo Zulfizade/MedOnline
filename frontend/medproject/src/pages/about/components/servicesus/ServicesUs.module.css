@@ -22,24 +22,23 @@
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    border: 1px solid #0066ff;
+    border: 1px solid #22a58b;
     padding: 1rem;
     border-radius: 0.5rem;
     background: #b0b0b0;
-    background: linear-gradient(90deg, rgb(255, 255, 255) 0%, rgba(0, 235, 94, 1) 100%);
+    background: linear-gradient(90deg, #99bff7 0%, #22a58b 100%);
 }
 
 .servicesUsList li i {
     font-size: 2rem;
-    color: #35addc;
+    color: #980fff;
     padding: 0.6rem;
     border-radius: 0.4rem;
 }
 
 .servicesUsList li h3 {
     font-size: 1.2rem;
-    font-weight: lighter;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: white;
 }

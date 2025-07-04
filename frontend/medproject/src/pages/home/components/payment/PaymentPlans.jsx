@@ -4,9 +4,9 @@ import styles from "./PaymentPlans.module.css";
 import FakeCardForm from "./FakeCardForm";
 
 const plans = [
-  { name: "Free Customer", price: 0, doctorLimit: 10, mailLimit: 5, color: "#bdbdbd" },
-  { name: "Pro Patient", price: 15, doctorLimit: 100, mailLimit: 20, color: "#3B82F6" },
-  { name: "VIP Patient", price: 30, doctorLimit: 200, mailLimit: 50, color: "#F472B6" }
+  { name: "Free Package", price: 0, doctorLimit: 10, mailLimit: 5, color: "#bdbdbd" },
+  { name: "Pro Package", price: 15, doctorLimit: 100, mailLimit: 20, color: "#198874" },
+  { name: "VIP Package", price: 30, doctorLimit: 200, mailLimit: 50, color: "#d1c200" }
 ];
 
 const PaymentPlans = () => {

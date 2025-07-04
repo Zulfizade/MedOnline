@@ -41,10 +41,11 @@
   position: absolute;
   bottom: 20%;
   left: 0;
-  width: 65%;
-  text-align: center;
+  width: 55%;
+  padding:0 3rem;
   z-index: 2;
   animation: captionIn 1.2s cubic-bezier(.4,0,.2,1);
+  
 }
 
 .slide:not(.active) .caption {
@@ -61,14 +62,12 @@
 
 .caption span {
   display: inline-block;
-  font-family: 'Poppins', 'Roboto', Arial, sans-serif;
-  font-size: 2.2rem;
-  font-weight: 800;
-  color: #fff;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 2rem;
+  font-weight: 900;
+  color: #18574d;
   letter-spacing: 1.5px;
-  text-shadow: 0 4px 24px rgba(0,0,0,0.18), 0 1px 0 #1a8f3c;
-  border-radius: 12px;
-  padding: 0.5rem 2.2rem;
+  text-shadow: 0 4px 24px rgba(52, 52, 52, 0.18), 0 1px 0 #d3efdb;
   animation: fadeInUp 1.2s cubic-bezier(.4,0,.2,1);
 }
 

@@ -27,7 +27,7 @@ export const router = createBrowserRouter([
       { path: '/about', element: <About /> },
       { path: '/contact', element: <Contact /> },
       { path: '/tips', element: <Tips /> },
-      { path: '/category', element: <Category /> },
+      { path: '/category/:speciality', element: <Category /> },
       { path: '/doctor/:id', element: <DoctorDetail /> },
     ]
   },
